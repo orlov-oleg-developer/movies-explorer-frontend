@@ -1,0 +1,107 @@
+.footer {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 75px 70px 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer__title {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 auto 20px;
+  padding-bottom: 20px;
+
+  border-bottom: solid 1px #E8E8E8;;
+
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  color: #A0A0A0;
+}
+
+.footer__grid {
+  width: 100%;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: min-content 1fr min-content;
+  grid-template-areas:
+  "year yandex git-hub";
+  column-gap: 20px;
+}
+
+.footer__text {
+  box-sizing: border-box;
+  margin: 0;
+
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.footer__text_value_year {
+  width: 50px;
+  grid-area: year;
+}
+
+.footer__text_value_yandex {
+  grid-area: yandex;
+  text-align: right;
+}
+
+.footer__text_value_git-hub {
+  grid-area: git-hub;
+}
+
+@media screen and (max-width: 850px) {
+  .footer {
+    padding: 75px 30px 20px;
+  }
+}
+
+@media screen and (max-width: 670px) {
+  .footer__title {
+    margin: 0 auto 30px;
+    padding-bottom: 21px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "yandex"
+      "git-hub"
+      "year "
+    ;
+    column-gap: 0px;
+  }
+
+  .footer__text {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .footer__text_value_yandex {
+    margin-bottom: 12px;
+    grid-area: yandex;
+    text-align: center;
+  }
+
+  .footer__text_value_git-hub {
+    margin-bottom: 30px;
+  }
+
+  .footer__text_value_year {
+    color: #A0A0A0;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .footer {
+    padding: 78px 10px 20px;
+  }
+}

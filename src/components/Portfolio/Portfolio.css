@@ -1,0 +1,138 @@
+.portfolio {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 70px 125px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.portfolio__title {
+  box-sizing: border-box;
+  margin: 0 0 45px;
+
+  text-align: start;
+  color: #A0A0A0;
+
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+.portfolio__list {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.portfolio__list-item {
+  box-sizing: border-box;
+  width: 100%;
+  padding-bottom: 13px;
+
+  border-bottom: 1px solid #E8E8E8;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  transition: opacity 0.2s ease-in-out;
+}
+
+.portfolio__list-item:last-of-type {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.portfolio__list-item:hover {
+  opacity: 0.6;
+}
+
+.portfolio__list-link {
+  width: 100%;
+  box-sizing: border-box;
+
+  text-decoration: none;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.portfolio__list-link-text {
+  margin: 0;
+  text-align: start;
+
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 50px;
+  letter-spacing: -0.04em;
+
+  color: black;
+}
+
+.portfolio__list-icon {
+  width: 29px;
+  height: 60px;
+
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+@media screen and (max-width: 850px) {
+  .portfolio {
+    padding: 0 50px 90px;
+  }
+
+  .portfolio__list-link-text {
+    font-size: 28px;
+  }
+
+  .portfolio__list-icon {
+    width: 27px;
+  }
+}
+
+@media screen and (max-width: 670px) {
+  .portfolio__title {
+    margin-bottom: 40px;
+
+    font-size: 14px;
+  }
+
+  .portfolio__list-link-text {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .portfolio__list-icon {
+    width: 18px;
+    height: 28px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .portfolio {
+    padding: 0 14px 70px;
+  }
+
+  .portfolio__list{
+    gap: 21px;
+  }
+
+  .portfolio__list-item {
+    padding-bottom: 19px;
+  }
+}

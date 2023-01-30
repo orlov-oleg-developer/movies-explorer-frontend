@@ -1,0 +1,136 @@
+.techs {
+  box-sizing: border-box;
+  padding: 102px 70px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: #F5F5F5;
+}
+
+.techs__title {
+  margin-bottom: 90px;
+}
+
+.techs__content {
+  box-sizing: border-box;
+  margin-bottom: 100px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+
+.techs__main-title {
+  box-sizing: border-box;
+  margin: 0;
+  width: 100%;
+
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  letter-spacing: -0.04em;
+}
+
+.techs__description {
+  box-sizing: border-box;
+  margin: 0;
+  max-width: 460px;
+
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.04em;
+}
+
+.techs__list {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  list-style-type: none;
+  margin: 0 auto;
+  padding: 0;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, max-content));
+  justify-content: center;
+  column-gap: 10px;
+  row-gap: 10px;
+;
+}
+
+.techs__list-item {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 21px 0;
+  /*min-width: 80px;*/
+  width: 100%;
+
+  background-color: #E8E8E8;
+  border-radius: 10px;
+
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+@media screen and (max-width: 850px) {
+  .techs {
+    padding: 90px 50px;
+  }
+
+  .techs__title {
+    margin-bottom: 80px;
+  }
+
+  .techs__content {
+    margin-bottom: 83px;
+    gap: 22px;
+  }
+
+  .techs__description {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .techs__list {
+    grid-template-columns: repeat(auto-fit, minmax(84px, max-content));
+  }
+
+  .techs__list-item {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .techs {
+    padding: 59px 18px;
+  }
+
+  .techs__title {
+    margin-bottom: 60px;
+  }
+
+  .techs__content {
+    margin-bottom: 50px;
+    gap: 24px;
+  }
+
+  .techs__main-title {
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  .techs__description {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .techs__list {
+    grid-template-columns: 84px 84px;
+  }
+}

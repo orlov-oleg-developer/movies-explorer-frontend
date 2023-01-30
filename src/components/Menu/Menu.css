@@ -1,0 +1,167 @@
+.menu {
+  display: none;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+
+  background-color: rgba(1,1,1,0.3);
+
+  transition: all 0.2s ease-in-out;
+}
+
+.menu_active {
+  display: flex;
+}
+
+.menu__button {
+  position: absolute;
+  right: 22px;
+  top: 22px;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+
+  background-position: center center;
+  background-size: contain;
+
+  transition: all 0.2s ease-in-out;
+}
+
+.menu__button:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.menu__list {
+  box-sizing: border-box;
+  height: 100%;
+
+  list-style-type: none;
+  padding: 159px 0 90px;
+  margin: 0 auto;
+
+  position: fixed;
+  z-index: 1;
+  right: 0;
+  top: 0;
+
+  width: 520px;
+  max-width: 520px;
+
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 29px;
+
+  transform: translateX(1000px);
+
+  transition: all 0.2s ease-in-out;
+}
+
+.menu__list_active {
+  transform: translateX(0px);
+}
+
+.menu__list-item {
+  box-sizing: border-box;
+  padding-bottom: 4px;
+
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+
+  color: black;
+  text-decoration: none;
+
+  position: relative;
+}
+
+.menu__list-item::before {
+  content: '';
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  border-bottom: 2px solid black;
+  transform: scaleX(0);
+  transition: transform 0.2s ease-in-out;
+}
+
+.menu__list-item:hover::before {
+  transform: scaleX(1);
+}
+
+.menu__navigation-account {
+  box-sizing: border-box;
+  margin-top: 586px;
+  padding: 9px 12px;
+
+  border: 2px solid rgba(170, 170, 170, 0.2);
+  border-radius: 50px;
+
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 7px;
+
+  text-decoration: none;
+  color: black;
+
+  transition: all 0.2s ease-in-out;
+}
+
+.menu__navigation-account:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.menu__navigation-icon {
+  width: 12px;
+  height: 14px;
+
+  object-position: center center;
+  object-fit: cover;
+}
+
+.menu__navigation-text {
+  padding: 0;
+  margin: 0;
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+@media screen and (max-width: 800px){
+  .menu {
+    /*display: flex*/
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .menu__button {
+    right: 12px;
+    top: 12px;
+  }
+
+  .menu__list {
+    width: 100%;
+    padding-top: 144px;
+    gap: 25px;
+  }
+
+  .menu__navigation-account {
+    margin-top: 413px;
+  }
+}
+
