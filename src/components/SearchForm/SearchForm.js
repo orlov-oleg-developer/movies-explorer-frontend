@@ -24,6 +24,7 @@ const SearchForm = () => {
           <input
             className="search-form__input"
             placeholder="Фильм"
+            required
           />
           <button
             className="search-form__button"
