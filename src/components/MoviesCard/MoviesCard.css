@@ -70,6 +70,7 @@
   background-position: center center;
   background-repeat: no-repeat;
 
+  border: none;
   border-radius: 30px;
 
   transition: opacity 0.2s ease-in-out;

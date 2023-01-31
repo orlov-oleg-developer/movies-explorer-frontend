@@ -25,7 +25,7 @@ const MoviesCard = ({movie, place}) => {
       ?
         (owner
           ?
-          <div
+          <button
             className="movies-card__button movies-card__button_type_check"
             style={{ backgroundImage: `url(${checkIconPath})` }}
           />
@@ -33,7 +33,7 @@ const MoviesCard = ({movie, place}) => {
           <button className="movies-card__text">Сохранить</button>
         )
       :
-        <div
+        <button
           className="movies-card__button"
           style={{ backgroundImage: `url(${deleteButtonPath})` }}
         />
