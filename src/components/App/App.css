@@ -1,0 +1,28 @@
+.App {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.App__header {
+  margin: 0 auto;
+}
+
+.App__promo {
+  margin: 20px 40px 0;
+}
+
+@media screen and (max-width: 850px) {
+  .App__promo {
+    margin: 16px 20px 0;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .App__header {
+    margin: 0 auto 14px;
+  }
+
+  .App__promo {
+    margin: 0px 14px 0;
+  }
+}
