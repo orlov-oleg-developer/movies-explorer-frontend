@@ -11,25 +11,25 @@ const Login = () => {
         <h2 className="login__title">Рады видеть!</h2>
       </div>
       <AuthForm buttonValue={'Зарегистрироваться'}>
-        <label className="auth__form-field">
+        <label className="auth-form__field">
           E-mail
           <input
-            className="auth__input"
+            className="auth-form__input"
             type="email"
             name="form-mail-input"
             required
           />
-          <span className="auth__input-error mail-input-error"/>
+          <span className="auth-form__input-error mail-input-error"/>
         </label>
-        <label className="auth__form-field">
+        <label className="auth-form__field">
           Пароль
           <input
-            className="auth__input"
+            className="auth-form__input"
             type="password"
             name="form-password-input"
             required
           />
-          <span className="auth__input-error mail-input-error"/>
+          <span className="auth-form__input-error mail-input-error"/>
         </label>
       </AuthForm>
       <Link to="/signup" className="login__link">Ещё не зарегистрированы?

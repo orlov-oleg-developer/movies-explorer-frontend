@@ -1,4 +1,4 @@
-.auth__form {
+.auth-form {
   box-sizing: border-box;
   margin: 0 auto;
   width: 100%;
@@ -10,7 +10,7 @@
   align-items: center;
 }
 
-.auth__form__fields {
+.auth-form__fields {
   width: 100%;
   box-sizing: border-box;
   display: flex;
@@ -18,7 +18,7 @@
   gap: 20px;
 }
 
-.auth__form-field {
+.auth-form__field {
   display: flex;
   flex-direction: column;
 
@@ -29,7 +29,7 @@
   color: #A0A0A0;
 }
 
-.auth__input {
+.auth-form__input {
   box-sizing: border-box;
   width: 100%;
   margin: 10px 0 0;
@@ -45,11 +45,11 @@
   line-height: 16px;
 }
 
-.auth__input:focus {
+.auth-form__input:focus {
   outline: none;
 }
 
-.auth__submit {
+.auth-form__submit {
   box-sizing: border-box;
   margin: 0 auto 16px;
   padding: 13px 0 15px;
@@ -68,17 +68,17 @@
   transition: opacity 0.2s ease-in-out;
 }
 
-.auth__submit:hover {
+.auth-form__submit:hover {
   opacity: 0.8;
   cursor: pointer;
 }
 
 @media screen and (max-width: 520px) {
-  .auth__form {
+  .auth-form {
     height: 481px;
   }
 
-  .auth__submit {
+  .auth-form__submit {
     font-size: 12px;
     line-height: 15px;
     margin-bottom: 14px;

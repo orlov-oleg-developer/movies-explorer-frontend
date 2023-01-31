@@ -11,35 +11,35 @@ const Register = () => {
         <h2 className="register__title">Добро пожаловать!</h2>
       </div>
       <AuthForm buttonValue={'Зарегистрироваться'}>
-        <label className="auth__form-field">
+        <label className="auth-form__field">
           Имя
           <input
-            className="auth__input"
+            className="auth-form__input"
             type="string"
             name="form-name-input"
             required
           />
-          <span className="auth__input-error mail-input-error"/>
+          <span className="auth-form__input-error mail-input-error"/>
         </label>
-        <label className="auth__form-field">
+        <label className="auth-form__field">
           E-mail
           <input
-            className="auth__input"
+            className="auth-form__input"
             type="email"
             name="form-mail-input"
             required
           />
-          <span className="auth__input-error mail-input-error"/>
+          <span className="auth-form__input-error mail-input-error"/>
         </label>
-        <label className="auth__form-field">
+        <label className="auth-form__field">
           Пароль
           <input
-            className="auth__input"
+            className="auth-form__input"
             type="password"
             name="form-password-input"
             required
           />
-          <span className="auth__input-error mail-input-error"/>
+          <span className="auth-form__input-error mail-input-error"/>
         </label>
       </AuthForm>
       <Link to="/signin" className="register__link">Уже зарегистрированы?
