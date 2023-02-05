@@ -3,11 +3,11 @@ import checkIconPath from "../../images/check-icon.svg";
 import deleteButtonPath from "../../images/delete-button.svg"
 
 const MoviesCard = ({movie, place}) => {
-
   const {
     duration,
     image,
     nameRU,
+    trailerLink,
     owner
   } = movie;
 
@@ -19,7 +19,7 @@ const MoviesCard = ({movie, place}) => {
       </div>
       <div
         className="movies-card__image"
-        style={{ backgroundImage: `url(${image})` }}
+        style={{ backgroundImage: `url(https://api.nomoreparties.co/${image.url})` }}
       />
       {place === "movie"
       ?

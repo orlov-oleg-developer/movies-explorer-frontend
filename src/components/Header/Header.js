@@ -5,7 +5,7 @@ import menuIconPath from '../../images/menu-icon.svg';
 import { NavLink, Link } from "react-router-dom";
 import Menu from "../Menu/Menu";
 
-function Header({className, isLoggedIn, registerLink, isMenuActive, handleMenuButton}) {
+function Header({className, isLoggedIn, isMenuActive, handleMenuButton }) {
   return (
     <>
     <header className={`header ${className}`}>
@@ -35,8 +35,8 @@ function Header({className, isLoggedIn, registerLink, isMenuActive, handleMenuBu
             />
           </div>
         : <div className="header__buttons-container">
-            <Link to={registerLink} className="header__link">Регистрация</Link>
-            <button className="header__button">Войти</button>
+            <Link to="/signup" className="header__link">Регистрация</Link>
+            <Link to="/signin" className="header__link header__link_state_login">Войти</Link>
           </div>
       }
     </header>

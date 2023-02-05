@@ -3,12 +3,24 @@ import searchIconPath from "../../images/search-icon.svg";
 import arrowButtonIconPath from "../../images/arrow-button.svg";
 import toggleActiveIconPath from "../../images/toggle-active.svg";
 import toggleDisableIconPath from "../../images/toggle-disable.svg";
-import {useState} from "react";
+import useInput from "../../hooks/useInput.js";
 
-const SearchForm = () => {
-  const [ toggleState, setToggleState ] = useState(true);
+const SearchForm = ({handleMoviesSearch, toggleStatus, setToggleState}) => {
 
-  const handleToggle = () => setToggleState(!toggleState)
+  const handleToggle = () => setToggleState(!toggleStatus)
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleMoviesSearch(movieInput.value, toggleStatus);
+  };
+
+  const movieInput = useInput(
+    '',
+    {
+      isEmpty: true,
+      minLength: 1,
+    }
+  );
 
   return (
     <section className="search-form">
@@ -19,15 +31,26 @@ const SearchForm = () => {
         />
         <form
           className="search-form__form"
-          onSubmit={(event) => event.preventDefault()}
+          onSubmit={handleSubmit}
         >
-          <input
-            className="search-form__input"
-            placeholder="Фильм"
-            required
-          />
+          <label className="search-form__field">
+            <input
+              className="search-form__input"
+              name="form-movie-input"
+              placeholder="Фильм"
+              value={movieInput.value}
+              // required
+              onChange={(event) => movieInput.onChange(event)}
+              onBlur={() => movieInput.onBlur()}
+            />
+            {(movieInput.isDirty && movieInput.minLengthError.state) &&
+              <span className="search-form__input-error">{movieInput.minLengthError.errorMessage}</span>
+            }
+          </label>
           <button
-            className="search-form__button"
+            disabled={movieInput.isInputValid ? false : true}
+            type={"submit"}
+            className={`search-form__button ${movieInput.isInputValid && 'search-form__button_active'}`}
             style={{ backgroundImage: `url(${arrowButtonIconPath})`}}
           />
         </form>
@@ -35,7 +58,7 @@ const SearchForm = () => {
       <div className="search-form__filter">
         <button
           className="search-form__toggle"
-          style={{ backgroundImage: `url(${toggleState ? toggleActiveIconPath : toggleDisableIconPath})`}}
+          style={{ backgroundImage: `url(${toggleStatus ? toggleActiveIconPath : toggleDisableIconPath})`}}
           onClick={handleToggle}
         />
         <p className="search-form__filter-name">Короткометражки</p>

@@ -15,10 +15,6 @@
   gap: 18px;
 }
 
-.movies-card:nth-child(n+13) {
-  display: none;
-}
-
 .movies-card__text-container {
   box-sizing: border-box;
   width: 100%;
@@ -109,20 +105,12 @@
 }
 
 @media screen and (max-width: 850px) {
-  .movies-card:nth-child(n+9) {
-    display: none;
-  }
-
   .movies-card__image {
     min-height: 190px;
   }
 }
 
 @media screen and (max-width: 520px) {
-  .movies-card:nth-child(n+6) {
-    display: none;
-  }
-
   .movies-card {
     padding: 14px 0;
     gap: 14px;
