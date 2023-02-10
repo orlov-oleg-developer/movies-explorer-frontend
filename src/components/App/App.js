@@ -75,7 +75,6 @@ function App() {
       .then((moviesList) => {
         setSearchQuery(searchQuery);
         setMovies(moviesList);
-        updateTotalCount();
       })
       .catch((err) => {
         setErrorMessage(err);
@@ -203,8 +202,12 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
+
     mainApi.getMovies()
-      .then((moviesList) => setSavedMovies(moviesList))
+      .then((savedMovieList) => {
+        setSavedMovies(
+          () => savedMovieList.filter((savedMovie) => savedMovie.owner._id !== currentUser._id));
+      })
       .catch((err) => console.log(err));
   }, [ isLoggedIn ])
 
@@ -214,9 +217,11 @@ function App() {
 
   useEffect(() => {
     setSearchedMoviesWithOwner(() => addOwnerStatusToMovie(searchedMovies));
-  }, [ searchedMovies, savedMovies ])
+    }, [ searchedMovies, savedMovies ])
 
   useEffect(() => {
+    updateTotalCount();
+
     window.addEventListener('resize', updateTotalCount);
     return () => window.removeEventListener('resize', updateTotalCount);
   }, [])
