@@ -5,7 +5,7 @@ import menuIconPath from '../../images/menu-icon.svg';
 import { NavLink, Link } from "react-router-dom";
 import Menu from "../Menu/Menu";
 
-function Header({className, isLoggedIn, isMenuActive, handleMenuButton }) {
+function Header({ className, isLoggedIn, isMenuActive, handleMenuButton }) {
   return (
     <>
     <header className={`header ${className}`}>

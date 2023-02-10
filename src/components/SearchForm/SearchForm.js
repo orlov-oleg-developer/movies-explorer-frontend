@@ -4,10 +4,14 @@ import arrowButtonIconPath from "../../images/arrow-button.svg";
 import toggleActiveIconPath from "../../images/toggle-active.svg";
 import toggleDisableIconPath from "../../images/toggle-disable.svg";
 import useInput from "../../hooks/useInput.js";
+import { useEffect } from "react";
 
-const SearchForm = ({handleMoviesSearch, toggleStatus, setToggleState}) => {
+const SearchForm = ({ handleMoviesSearch, toggleStatus, setToggleStatus }) => {
 
-  const handleToggle = () => setToggleState(!toggleStatus)
+  const handleToggle = () => {
+    localStorage.setItem('toggle', JSON.stringify(!toggleStatus));
+    setToggleStatus(!toggleStatus);
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -21,6 +25,21 @@ const SearchForm = ({handleMoviesSearch, toggleStatus, setToggleState}) => {
       minLength: 1,
     }
   );
+
+  useEffect(() => {
+    let toggle = JSON.parse(localStorage.getItem('toggle'));
+    if (toggle === null) toggle = false;
+    setToggleStatus(toggle);
+
+    let movieRequest = localStorage.getItem('movieRequest');
+    if (movieRequest === null) movieRequest = '';
+
+    movieInput.onChange({target:{value:movieRequest}});
+  }, [])
+
+  useEffect(() => {
+    handleMoviesSearch(movieInput.value, toggleStatus);
+  }, [movieInput.value, toggleStatus])
 
   return (
     <section className="search-form">
@@ -40,7 +59,10 @@ const SearchForm = ({handleMoviesSearch, toggleStatus, setToggleState}) => {
               placeholder="Фильм"
               value={movieInput.value}
               // required
-              onChange={(event) => movieInput.onChange(event)}
+              onChange={(event) => {
+                localStorage.setItem('movieRequest', event.target.value)
+                movieInput.onChange(event)
+              }}
               onBlur={() => movieInput.onBlur()}
             />
             {(movieInput.isDirty && movieInput.minLengthError.state) &&

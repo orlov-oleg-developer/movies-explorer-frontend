@@ -13,7 +13,7 @@ class MoviesApi {
   }
 
   _request(url, options) {
-    return fetch(url, options).then(this._checkResponse)
+    return fetch(url, options).then(this._checkResponse);
   }
 
   getMovies() {

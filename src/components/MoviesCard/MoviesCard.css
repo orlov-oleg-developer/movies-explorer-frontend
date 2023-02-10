@@ -59,6 +59,10 @@
   background-size: contain;
 }
 
+.movies-card__image:hover {
+  cursor: pointer;
+}
+
 .movies-card__button {
   width: 100px;
   height: 29px;

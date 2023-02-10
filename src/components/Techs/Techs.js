@@ -1,7 +1,7 @@
 import './Techs.css'
 import PageTitle from "../UI/PageTitle/PageTitle";
 
-const Techs = ({techs}) => {
+const Techs = ({ techs }) => {
   return (
     <section className="techs">
       <PageTitle title={"Технологии"} mixClass={"techs__title"}/>

@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 
 const useValidation = (inputValue, validations) => {
   const [ minLengthError, setMinLengthError ] = useState({ state: false, errorMessage: ""});

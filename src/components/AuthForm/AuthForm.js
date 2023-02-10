@@ -1,6 +1,6 @@
 import './AuthForm.css'
 
-export function AuthForm({ buttonValue, children, onSubmit, isInputsValid, error}) {
+export function AuthForm({ buttonValue, children, onSubmit, isInputsValid, error }) {
   return (
     <form
       className="auth-form"

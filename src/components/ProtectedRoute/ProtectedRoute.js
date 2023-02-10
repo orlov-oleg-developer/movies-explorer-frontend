@@ -3,15 +3,14 @@ import { Route, Redirect } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
-const ProtectedRoute = ({ component: Component, isLoggedIn, path, ...props }) => {
+const ProtectedRoute = ({ component: Component, isLoggedIn, path, handleMenuButton, ...props }) => {
   return (
     <Route>
       <Header
         className="App__header"
         isLoggedIn={isLoggedIn}
-        registerLink={"sign-up"}
         isMenuActive={props.isMenuActive}
-        handleMenuButton={props.handleMenuButtonCb}
+        handleMenuButton={handleMenuButton}
       />
       {isLoggedIn ? <Component {...props} /> : <Redirect to="./" />}
       {path !== '/profile' && <Footer/>}

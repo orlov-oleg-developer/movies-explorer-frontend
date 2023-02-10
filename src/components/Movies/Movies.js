@@ -6,19 +6,23 @@ import Preloader from "../Preloader/Preloader";
 const Movies = (
   {
     handleMoviesSearchCb,
+    handleAddMoviesCountCb,
+    handleLikeMovie,
+    handleDeleteMovie,
     moviesList,
     isLoading,
     totalCount,
-    handleAddMoviesCountCb,
     toggleState,
     setToggleStateCb,
-}) => {
+    errorMessage,
+  }) => {
+
   return (
     <main className="movies">
       <SearchForm
         handleMoviesSearch={handleMoviesSearchCb}
         toggleStatus={toggleState}
-        setToggleState={setToggleStateCb}
+        setToggleStatus={setToggleStateCb}
       />
       {moviesList.length !== 0
         ?
@@ -27,9 +31,14 @@ const Movies = (
           cardPlace={"movie"}
           moviesCount={totalCount}
           addMoviesCount={handleAddMoviesCountCb}
+          handleLikeMovieCb={handleLikeMovie}
+          handleMovieDeleteCb={handleDeleteMovie}
         />
         :
-        <p>Ничего не найдено</p>
+        errorMessage
+          ? <p>Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен.
+            Подождите немного и попробуйте ещё раз</p>
+          : <p>Ничего не найдено</p>
       }
       {isLoading && <Preloader />}
     </main>

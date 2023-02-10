@@ -6,7 +6,7 @@ import useInput from "../../hooks/useInput";
 import { useEffect, useState } from "react";
 
 const Register = ({ onRegister, errorMessage }) => {
-  const [ isInputsValid, setIsInputsValid] = useState(false);
+  const [ isInputsValid, setIsInputsValid ] = useState(false);
 
   const nameInput = useInput(
     '',
@@ -32,7 +32,7 @@ const Register = ({ onRegister, errorMessage }) => {
     })
 
   const handleSubmit = () => {
-    onRegister({ mailInput, passwordInput, nameInput })
+    onRegister({ mailInput, passwordInput, nameInput });
   }
 
   useEffect(() => {

@@ -6,7 +6,7 @@ import useInput from "../../hooks/useInput";
 import {useEffect, useState} from "react";
 
 const Login = ({ onLogin, errorMessage }) => {
-  const [ isInputsValid, setIsInputsValid] = useState(false);
+  const [ isInputsValid, setIsInputsValid ] = useState(false);
 
   const mailInput = useInput(
     '',
@@ -24,7 +24,7 @@ const Login = ({ onLogin, errorMessage }) => {
     })
 
   const handleSubmit = () => {
-    onLogin({ mailInput, passwordInput })
+    onLogin({ mailInput, passwordInput });
   }
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const Login = ({ onLogin, errorMessage }) => {
         <h2 className="login__title">Рады видеть!</h2>
       </div>
       <AuthForm
-        buttonValue={'Зарегистрироваться'}
+        buttonValue={'Войти'}
         onSubmit={handleSubmit}
         isInputsValid={isInputsValid}
         error={errorMessage}

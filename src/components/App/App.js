@@ -1,6 +1,6 @@
 import {Route, Switch, useHistory} from 'react-router-dom';
-import {useCallback, useEffect, useMemo, useState} from 'react';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext.js'
+import {useCallback, useEffect, useState} from 'react';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import './App.css';
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
@@ -14,11 +14,10 @@ import Register from "../Register/Register";
 import Login from "../Login/Login";
 import PageNotFound from "../PageNotFound/PageNotFound";
 
-import api from '../../utils/Api.js'
-import * as auth from '../../utils/auth.js'
+import mainApi from '../../utils/MainApi';
+import * as auth from '../../utils/auth.js';
 import moviesApi from "../../utils/MoviesApi";
-
-import { savedMovies } from "../../data/constants"
+import useSearch from "../../hooks/useSearch";
 
 function App() {
 
@@ -27,30 +26,46 @@ function App() {
   const [ isLoading, setIsLoading ] = useState(false);
   const [ movies, setMovies ] = useState([]);
   const [ searchQuery, setSearchQuery ] = useState('');
-  const [ toggleState, setToggleState] = useState(false);
+  const [ toggleState, setToggleState ] = useState(false);
   const [ totalCount, setTotalCount ] = useState(0);
-  const [isSuccessRegister, setIsSuccessRegister] = useState(false);
-  const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState({});
-
+  const [ savedMovies, setSavedMovies ] = useState([]);
+  const [ currentUser, setCurrentUser ] = useState({});
+  const searchedMovies = useSearch(movies, searchQuery, toggleState);
+  const [ searchedMoviesWithOwner, setSearchedMoviesWithOwner ] = useState([]);
+  const searchedSavedMovies = useSearch(savedMovies, searchQuery, toggleState);
   const [ errorMessage, setErrorMessage ] = useState(null);
 
   const history = useHistory();
 
-  const searchedMovies = useMemo(() => {
-    const moviesList = movies.filter(movie => movie.nameRU.includes(searchQuery));
+  const addOwnerStatusToMovie = (moviesList) => {
+    return moviesList.map((movie) => {
+      let ownerStatus = false;
 
-    if (toggleState) {
-      return moviesList.filter((movie) => {
-        return (movie.duration <= 40)
-      })
+      for (let savedMovieIndex = 0; savedMovieIndex < savedMovies.length; savedMovieIndex++) {
+        if (String(savedMovies[savedMovieIndex].movieId)  === String(movie.id)) {
+          ownerStatus = true;
+          movie._id = savedMovies[savedMovieIndex]._id;
+          break;
+        }
+      }
+      return (ownerStatus ? {...movie, owner: true} : {...movie, owner: false});
+    })
+  }
+
+  const updateTotalCount = () => {
+    if(window.innerWidth >= 1280) {
+      setTotalCount(12);
     }
-
-    return moviesList;
-  }, [searchQuery, movies, toggleState])
+    else if(window.innerWidth >= 768) {
+      setTotalCount(8);
+    }
+    else {
+      setTotalCount(5);
+    }
+  }
 
   const handleMenuButtonCb = () => {
-    setIsMenuActive(!isMenuActive)
+    setIsMenuActive(!isMenuActive);
   }
 
   const handleMoviesSearchCb = (searchQuery) => {
@@ -60,38 +75,65 @@ function App() {
       .then((moviesList) => {
         setSearchQuery(searchQuery);
         setMovies(moviesList);
-        if(window.innerWidth >= 1280) {
-          setTotalCount(12)
-        }
-        else if(window.innerWidth >= 768) {
-          setTotalCount(8)
-        }
-        else {
-          setTotalCount(5)
-        }
+        updateTotalCount();
       })
       .catch((err) => {
-        console.log(err)
+        setErrorMessage(err);
       })
       .finally(() => {
         setIsLoading(false);
       });
   }
 
-  const handleAddMoviesCountCb = () => {
-    console.log(`Количество карточек до ${totalCount}`)
+  const handleSavedMoviesSearchCb = (searchQuery) => {
+    setSearchQuery(searchQuery);
+  }
 
+  const handleAddMoviesCountCb = () => {
     if(window.innerWidth >= 1280) {
-      setTotalCount(totalCount + 3)
+      setTotalCount(totalCount + 3);
     }
     else if(window.innerWidth >= 768) {
-      setTotalCount(totalCount + 2)
+      setTotalCount(totalCount + 2);
     }
     else {
-      setTotalCount(totalCount + 2)
+      setTotalCount(totalCount + 2);
     }
+  }
 
-    console.log(`Количество карточек после ${totalCount}`)
+  const handleLikeMovieCb = (movieData) => {
+    mainApi.createMovie(movieData)
+      .then((movie) => {
+        setSavedMovies([...savedMovies, movie]);
+     })
+     .catch((err) => {
+      console.log(err);
+     })
+  }
+
+  const handleDeleteMovieCb = (movie) => {
+    mainApi.deleteMovie(movie)
+      .then((movie) => {
+        setSavedMovies(
+          (savedMovies) => savedMovies.filter((savedMovie) => savedMovie.movieId !== movie.movieId));
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  const handleUpdateUserInfo = (userData) => {
+    setIsLoading(true);
+    mainApi.updateUserInfo(userData)
+      .then((userData) => {
+        setCurrentUser(userData);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
   }
 
   const cbAuthenticate = useCallback(async (token) => {
@@ -99,9 +141,8 @@ function App() {
       const data = await auth.getContent(token);
       if (!data) throw new Error('Неверный токен');
       localStorage.setItem('jwt', token);
-      // setUserData(data.email);
       setIsLoggedIn(true);
-      history.push('/movies')
+      history.push('/');
     } catch (e) {
       console.log(e);
     }
@@ -111,27 +152,22 @@ function App() {
     try {
       const res = await auth.register({ mailInput, passwordInput, nameInput });
       if (res) {
-        setIsSuccessRegister(true);
-        api.updateToken(res.token);
+        mainApi.updateToken(res.token);
         cbAuthenticate(res.token);
       }
     } catch (e) {
-      setIsSuccessRegister(false);
       setErrorMessage(e);
     }
-    setIsInfoPopupOpen(true);
   }, [])
 
   const cbLogin = useCallback(async ({ mailInput, passwordInput }) => {
     try {
       const token = await auth.authorize({ mailInput, passwordInput });
       if (token) {
-        api.updateToken(token.token);
+        mainApi.updateToken(token.token);
         cbAuthenticate(token.token);
       }
     } catch (e) {
-      setIsSuccessRegister(false);
-      setIsInfoPopupOpen(true);
       setErrorMessage(e.message);
     } finally {
       //TODO loading
@@ -146,7 +182,7 @@ function App() {
       }
       cbAuthenticate(jwt);
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
     finally {
       //TODO loading
@@ -159,8 +195,31 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if (!isLoggedIn) return
+    mainApi.getUserInfo()
+      .then((userData) => {
+        setCurrentUser(userData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    mainApi.getMovies()
+      .then((moviesList) => setSavedMovies(moviesList))
+      .catch((err) => console.log(err));
+  }, [ isLoggedIn ])
+
+  useEffect(() => {
     cbTokenCheck();
-  }, [cbTokenCheck]);
+  }, [ cbTokenCheck ]);
+
+  useEffect(() => {
+    setSearchedMoviesWithOwner(() => addOwnerStatusToMovie(searchedMovies));
+  }, [ searchedMovies, savedMovies ])
+
+  useEffect(() => {
+    window.addEventListener('resize', updateTotalCount);
+    return () => window.removeEventListener('resize', updateTotalCount);
+  }, [])
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -176,7 +235,6 @@ function App() {
             <Header
               className="App__header"
               isLoggedIn={isLoggedIn}
-              registerLink={"sign-up"}
               isMenuActive={isMenuActive}
               handleMenuButton={handleMenuButtonCb}
             />
@@ -185,33 +243,43 @@ function App() {
           </Route>
           <ProtectedRoute
             path="/movies"
-            isLoggedIn={isLoggedIn}
             component={Movies}
             handleMoviesSearchCb={handleMoviesSearchCb}
-            moviesList={searchedMovies}
-            isLoading={isLoading}
-            totalCount={totalCount}
             handleAddMoviesCountCb={handleAddMoviesCountCb}
-            toggleState={toggleState}
-            setToggleStateCb={setToggleState}
-
-            isMenuActive={isMenuActive}
+            handleLikeMovie={handleLikeMovieCb}
+            handleDeleteMovie={handleDeleteMovieCb}
             handleMenuButton={handleMenuButtonCb}
+            setToggleStateCb={setToggleState}
+            moviesList={searchedMoviesWithOwner}
+            isLoggedIn={isLoggedIn}
+            isLoading={isLoading}
+            isMenuActive={isMenuActive}
+            totalCount={totalCount}
+            toggleState={toggleState}
+            errorMessage={errorMessage}
           />
           <ProtectedRoute
             path="/saved-movies"
-            isLoggedIn={isLoggedIn}
             component={SavedMovies}
-            savedMoviesList={savedMovies}
-
-            isMenuActive={isMenuActive}
+            handleMoviesSearchCb={handleSavedMoviesSearchCb}
+            handleAddMoviesCountCb={handleAddMoviesCountCb}
+            handleDeleteMovie={handleDeleteMovieCb}
             handleMenuButton={handleMenuButtonCb}
+            setToggleStateCb={setToggleState}
+            savedMoviesList={searchedSavedMovies}
+            isLoggedIn={isLoggedIn}
+            isLoading={isLoading}
+            isMenuActive={isMenuActive}
+            totalCount={totalCount}
+            toggleState={toggleState}
+            errorMessage={errorMessage}
           />
           <ProtectedRoute
             path="/profile"
             isLoggedIn={isLoggedIn}
             component={Profile}
-            cbLogout={cbLogout}
+            handleLogout={cbLogout}
+            handleUpdateUserInfo={handleUpdateUserInfo}
 
             isMenuActive={isMenuActive}
             handleMenuButton={handleMenuButtonCb}
