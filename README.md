@@ -5,3 +5,5 @@ Diplom's frontend
 
 IP 84.252.130.41  
 Frontend https://api.movies.developer.nomoredomains.rocks
+
+Pull Requests - https://github.com/orlov-oleg-developer/movies-explorer-frontend/pull/2
