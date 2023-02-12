@@ -2,12 +2,18 @@ import './MoviesCardList.css'
 import MoviesCard from "../MoviesCard/MoviesCard";
 
 const MoviesCardList = ({ movies, cardPlace, moviesCount, addMoviesCount, handleLikeMovieCb, handleMovieDeleteCb }) => {
-  const list = [];
+  let list = [];
+
+  let key = new Date();
+  const generateKey = () => {
+    key += new Date()
+    return key;
+  }
 
   for (let i = 0; i < moviesCount && i < movies.length; i++) {
     list.push(
       <MoviesCard
-        key={i}
+        key={generateKey()}
         movie={movies[i]}
         place={cardPlace}
         onMovieLike={handleLikeMovieCb}
