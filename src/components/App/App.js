@@ -118,20 +118,8 @@ function App() {
   }
 
   const handleMoviesSearchCb = (searchQuery, toggleState) => {
-    setIsLoading(true);
-
-    moviesApi.getMovies()
-      .then((moviesList) => {
-        setSearchQuery(searchQuery);
-        setToggleState(toggleState);
-        setMovies(moviesList);
-      })
-      .catch((err) => {
-        setErrorMessage(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    setSearchQuery(searchQuery);
+    setToggleState(toggleState);
   }
 
   const handleSavedMoviesSearchCb = (searchQuery, toggleState) => {
@@ -211,6 +199,18 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
+
+    setIsLoading(true);
+    moviesApi.getMovies()
+    .then((moviesList) => {
+        setMovies(moviesList);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    .finally(() => {
+      setIsLoading(false);
+    })
   }, [ isLoggedIn ]);
 
   useEffect(() => {
