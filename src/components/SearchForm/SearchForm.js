@@ -4,18 +4,21 @@ import arrowButtonIconPath from "../../images/arrow-button.svg";
 import toggleActiveIconPath from "../../images/toggle-active.svg";
 import toggleDisableIconPath from "../../images/toggle-disable.svg";
 import useInput from "../../hooks/useInput.js";
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 
-const SearchForm = ({ handleMoviesSearch, toggleStatus, setToggleStatus }) => {
+const SearchForm = ({ path, handleMoviesSearch }) => {
+
+  const [ toggleState, setToggleState ] = useState(false);
 
   const handleToggle = () => {
-    localStorage.setItem('toggle', JSON.stringify(!toggleStatus));
-    setToggleStatus(!toggleStatus);
+    setToggleState(!toggleState);
+
+    if (path === '/movies') localStorage.setItem('toggle', JSON.stringify(!toggleState));
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleMoviesSearch(movieInput.value, toggleStatus);
+    handleMoviesSearch(movieInput.value, toggleState);
   };
 
   const movieInput = useInput(
@@ -27,19 +30,21 @@ const SearchForm = ({ handleMoviesSearch, toggleStatus, setToggleStatus }) => {
   );
 
   useEffect(() => {
-    let toggle = JSON.parse(localStorage.getItem('toggle'));
-    if (toggle === null) toggle = false;
-    setToggleStatus(toggle);
+    if (path === '/movies') {
+      let toggle = JSON.parse(localStorage.getItem('toggle'));
+      if (toggle === null) toggle = false;
+      setToggleState(toggle);
 
-    let movieRequest = localStorage.getItem('movieRequest');
-    if (movieRequest === null) movieRequest = '';
+      let movieRequest = localStorage.getItem('movieRequest');
+      if (movieRequest === null) movieRequest = '';
 
-    movieInput.onChange({target:{value:movieRequest}});
+      movieInput.onChange({target:{value:movieRequest}});
+    }
   }, [])
 
   useEffect(() => {
-    handleMoviesSearch(movieInput.value, toggleStatus);
-  }, [movieInput.value, toggleStatus])
+    handleMoviesSearch(movieInput.value, toggleState);
+  }, [movieInput.value, toggleState])
 
   return (
     <section className="search-form">
@@ -60,7 +65,7 @@ const SearchForm = ({ handleMoviesSearch, toggleStatus, setToggleStatus }) => {
               value={movieInput.value}
               // required
               onChange={(event) => {
-                localStorage.setItem('movieRequest', event.target.value)
+                if (path === '/movies') localStorage.setItem('movieRequest', event.target.value)
                 movieInput.onChange(event)
               }}
               onBlur={() => movieInput.onBlur()}
@@ -80,7 +85,7 @@ const SearchForm = ({ handleMoviesSearch, toggleStatus, setToggleStatus }) => {
       <div className="search-form__filter">
         <button
           className="search-form__toggle"
-          style={{ backgroundImage: `url(${toggleStatus ? toggleActiveIconPath : toggleDisableIconPath})`}}
+          style={{ backgroundImage: `url(${toggleState ? toggleActiveIconPath : toggleDisableIconPath})`}}
           onClick={handleToggle}
         />
         <p className="search-form__filter-name">Короткометражки</p>

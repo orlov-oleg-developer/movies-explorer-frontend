@@ -4,22 +4,20 @@ import Preloader from "../Preloader/Preloader";
 
 const SavedMovies = (
   {
+    page,
     handleMoviesSearchCb,
     handleAddMoviesCountCb,
     handleDeleteMovie,
     savedMoviesList,
     totalCount,
-    toggleState,
-    setToggleStateCb,
     errorMessage,
     isLoading
   }) => {
   return (
     <main>
       <SearchForm
+        path={page}
         handleMoviesSearch={handleMoviesSearchCb}
-        toggleStatus={toggleState}
-        setToggleStatus={setToggleStateCb}
       />
       {savedMoviesList.length !== 0
         ? <MoviesCardList

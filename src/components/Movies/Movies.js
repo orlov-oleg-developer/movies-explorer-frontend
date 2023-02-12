@@ -5,6 +5,7 @@ import Preloader from "../Preloader/Preloader";
 
 const Movies = (
   {
+    page,
     handleMoviesSearchCb,
     handleAddMoviesCountCb,
     handleLikeMovie,
@@ -12,17 +13,14 @@ const Movies = (
     moviesList,
     isLoading,
     totalCount,
-    toggleState,
-    setToggleStateCb,
     errorMessage,
   }) => {
 
   return (
     <main className="movies">
       <SearchForm
+        path={page}
         handleMoviesSearch={handleMoviesSearchCb}
-        toggleStatus={toggleState}
-        setToggleStatus={setToggleStateCb}
       />
       {moviesList.length !== 0
         ?

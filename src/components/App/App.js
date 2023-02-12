@@ -20,20 +20,23 @@ import moviesApi from "../../utils/MoviesApi";
 import useSearch from "../../hooks/useSearch";
 
 function App() {
-
-  const [ isMenuActive, setIsMenuActive ] = useState(false);
+  const [ currentUser, setCurrentUser ] = useState({});
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
   const [ isLoading, setIsLoading ] = useState(false);
-  const [ movies, setMovies ] = useState([]);
+  const [ totalCount, setTotalCount ] = useState(0);
+  const [ isMenuActive, setIsMenuActive ] = useState(false);
+  const [ errorMessage, setErrorMessage ] = useState(null);
+
   const [ searchQuery, setSearchQuery ] = useState('');
   const [ toggleState, setToggleState ] = useState(false);
-  const [ totalCount, setTotalCount ] = useState(0);
-  const [ savedMovies, setSavedMovies ] = useState([]);
-  const [ currentUser, setCurrentUser ] = useState({});
-  const searchedMovies = useSearch(movies, searchQuery, toggleState);
+
   const [ searchedMoviesWithOwner, setSearchedMoviesWithOwner ] = useState([]);
+
+  const [ movies, setMovies ] = useState([]);
+  const searchedMovies = useSearch(movies, searchQuery, toggleState);
+
+  const [ savedMovies, setSavedMovies ] = useState([]);
   const searchedSavedMovies = useSearch(savedMovies, searchQuery, toggleState);
-  const [ errorMessage, setErrorMessage ] = useState(null);
 
   const history = useHistory();
 
@@ -68,26 +71,6 @@ function App() {
     setIsMenuActive(!isMenuActive);
   }
 
-  const handleMoviesSearchCb = (searchQuery) => {
-    setIsLoading(true);
-
-     moviesApi.getMovies()
-      .then((moviesList) => {
-        setSearchQuery(searchQuery);
-        setMovies(moviesList);
-      })
-      .catch((err) => {
-        setErrorMessage(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }
-
-  const handleSavedMoviesSearchCb = (searchQuery) => {
-    setSearchQuery(searchQuery);
-  }
-
   const handleAddMoviesCountCb = () => {
     if(window.innerWidth >= 1280) {
       setTotalCount(totalCount + 3);
@@ -104,10 +87,10 @@ function App() {
     mainApi.createMovie(movieData)
       .then((movie) => {
         setSavedMovies([...savedMovies, movie]);
-     })
-     .catch((err) => {
-      console.log(err);
-     })
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   const handleDeleteMovieCb = (movie) => {
@@ -133,6 +116,29 @@ function App() {
       .finally(() => {
         setIsLoading(false);
       })
+  }
+
+
+  const handleMoviesSearchCb = (searchQuery, toggleState) => {
+    setIsLoading(true);
+
+    moviesApi.getMovies()
+      .then((moviesList) => {
+        setSearchQuery(searchQuery);
+        setToggleState(toggleState);
+        setMovies(moviesList);
+      })
+      .catch((err) => {
+        setErrorMessage(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
+
+  const handleSavedMoviesSearchCb = (searchQuery, toggleState) => {
+    setSearchQuery(searchQuery);
+    setToggleState(toggleState);
   }
 
   const cbAuthenticate = useCallback(async (token) => {
@@ -257,15 +263,14 @@ function App() {
             handleAddMoviesCountCb={handleAddMoviesCountCb}
             handleLikeMovie={handleLikeMovieCb}
             handleDeleteMovie={handleDeleteMovieCb}
-            handleMenuButton={handleMenuButtonCb}
-            setToggleStateCb={setToggleState}
             moviesList={searchedMoviesWithOwner}
             isLoggedIn={isLoggedIn}
             isLoading={isLoading}
-            isMenuActive={isMenuActive}
             totalCount={totalCount}
-            toggleState={toggleState}
             errorMessage={errorMessage}
+
+            isMenuActive={isMenuActive}
+            handleMenuButton={handleMenuButtonCb}
           />
           <ProtectedRoute
             path="/saved-movies"
@@ -273,15 +278,14 @@ function App() {
             handleMoviesSearchCb={handleSavedMoviesSearchCb}
             handleAddMoviesCountCb={handleAddMoviesCountCb}
             handleDeleteMovie={handleDeleteMovieCb}
-            handleMenuButton={handleMenuButtonCb}
-            setToggleStateCb={setToggleState}
             savedMoviesList={searchedSavedMovies}
             isLoggedIn={isLoggedIn}
             isLoading={isLoading}
-            isMenuActive={isMenuActive}
             totalCount={totalCount}
-            toggleState={toggleState}
             errorMessage={errorMessage}
+
+            isMenuActive={isMenuActive}
+            handleMenuButton={handleMenuButtonCb}
           />
           <ProtectedRoute
             path="/profile"

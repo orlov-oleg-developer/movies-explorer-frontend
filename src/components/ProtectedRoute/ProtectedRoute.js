@@ -12,7 +12,7 @@ const ProtectedRoute = ({ component: Component, isLoggedIn, path, handleMenuButt
         isMenuActive={props.isMenuActive}
         handleMenuButton={handleMenuButton}
       />
-      {isLoggedIn ? <Component {...props} /> : <Redirect to="./" />}
+      {isLoggedIn ? <Component page={path} {...props} /> : <Redirect to="./" />}
       {path !== '/profile' && <Footer/>}
     </Route>
   );
