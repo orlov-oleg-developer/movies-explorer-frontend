@@ -44,7 +44,7 @@ const SearchForm = ({ path, handleMoviesSearch }) => {
 
   useEffect(() => {
     handleMoviesSearch(movieInput.value, toggleState);
-  }, [movieInput.value, toggleState])
+  }, [toggleState])
 
   return (
     <section className="search-form">
@@ -68,10 +68,9 @@ const SearchForm = ({ path, handleMoviesSearch }) => {
                 if (path === '/movies') localStorage.setItem('movieRequest', event.target.value)
                 movieInput.onChange(event)
               }}
-              onBlur={() => movieInput.onBlur()}
             />
-            {(movieInput.isDirty && movieInput.minLengthError.state) &&
-              <span className="search-form__input-error">{movieInput.minLengthError.errorMessage}</span>
+            {(movieInput.isDirty && movieInput.isEmpty.state) &&
+              <span className="search-form__input-error">{movieInput.isEmpty.errorMessage}</span>
             }
           </label>
           <button
