@@ -190,7 +190,11 @@ function App() {
 
   const cbLogout = useCallback(() => {
     setIsLoggedIn(false);
+    setSearchQuery('');
+    setToggleState(false);
     localStorage.removeItem('jwt');
+    localStorage.removeItem('toggle');
+    localStorage.removeItem('movieRequest');
   }, []);
 
   useEffect(() => {
