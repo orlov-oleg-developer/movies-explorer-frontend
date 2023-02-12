@@ -4,15 +4,13 @@ import arrowButtonIconPath from "../../images/arrow-button.svg";
 import toggleActiveIconPath from "../../images/toggle-active.svg";
 import toggleDisableIconPath from "../../images/toggle-disable.svg";
 import useInput from "../../hooks/useInput.js";
-import {useEffect, useState} from "react";
+import {useEffect, useState } from "react";
 
 const SearchForm = ({ path, handleMoviesSearch }) => {
-
   const [ toggleState, setToggleState ] = useState(false);
 
   const handleToggle = () => {
     setToggleState(!toggleState);
-
     if (path === '/movies') localStorage.setItem('toggle', JSON.stringify(!toggleState));
   }
 
@@ -32,19 +30,17 @@ const SearchForm = ({ path, handleMoviesSearch }) => {
   useEffect(() => {
     if (path === '/movies') {
       let toggle = JSON.parse(localStorage.getItem('toggle'));
-      if (toggle === null) toggle = false;
-      setToggleState(toggle);
+      if (toggle !== null) {
+        setToggleState(toggle);
+      }
 
       let movieRequest = localStorage.getItem('movieRequest');
-      if (movieRequest === null) movieRequest = '';
-
-      movieInput.onChange({target:{value:movieRequest}});
+      if (movieRequest !== null) {
+        movieInput.onChange({target:{value:movieRequest}});
+        handleMoviesSearch(movieInput.value, toggleState);
+      }
     }
   }, [])
-
-  useEffect(() => {
-    handleMoviesSearch(movieInput.value, toggleState);
-  }, [toggleState])
 
   return (
     <section className="search-form">
@@ -70,7 +66,7 @@ const SearchForm = ({ path, handleMoviesSearch }) => {
               }}
             />
             {(movieInput.isDirty && movieInput.isEmpty.state) &&
-              <span className="search-form__input-error">{movieInput.isEmpty.errorMessage}</span>
+              <span className="search-form__input-error">Нужно ввести ключевое слово</span>
             }
           </label>
           <button

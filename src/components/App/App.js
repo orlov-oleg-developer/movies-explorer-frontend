@@ -157,8 +157,7 @@ function App() {
     try {
       const res = await auth.register({ mailInput, passwordInput, nameInput });
       if (res) {
-        mainApi.updateToken(res.token);
-        cbAuthenticate(res.token);
+        cbLogin({mailInput, passwordInput});
       }
     } catch (e) {
       setErrorMessage(e);
@@ -198,6 +197,8 @@ function App() {
     setIsLoggedIn(false);
     setSearchQuery('');
     setToggleState(false);
+    setSavedMovies([]);
+    setMovies([]);
     localStorage.removeItem('jwt');
     localStorage.removeItem('toggle');
     localStorage.removeItem('movieRequest');
@@ -212,14 +213,19 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
+  }, [ isLoggedIn ]);
 
+  useEffect(() => {
     mainApi.getMovies()
       .then((savedMovieList) => {
-        setSavedMovies(
-          () => savedMovieList.filter((savedMovie) => savedMovie.owner._id !== currentUser._id));
+        if (currentUser._id === savedMovieList[0].owner._id) console.log(true)
+        const filteredMovieList = savedMovieList.filter((savedMovie) => {
+          return savedMovie.owner._id === currentUser._id
+        })
+        setSavedMovies(filteredMovieList);
       })
       .catch((err) => console.log(err));
-  }, [ isLoggedIn ])
+  }, [currentUser]);
 
   useEffect(() => {
     cbTokenCheck();
@@ -227,7 +233,7 @@ function App() {
 
   useEffect(() => {
     setSearchedMoviesWithOwner(() => addOwnerStatusToMovie(searchedMovies));
-    }, [ searchedMovies, savedMovies ])
+  }, [ searchedMovies, savedMovies ])
 
   useEffect(() => {
     updateTotalCount();
