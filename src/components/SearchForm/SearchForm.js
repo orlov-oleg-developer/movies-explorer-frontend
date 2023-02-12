@@ -42,6 +42,12 @@ const SearchForm = ({ path, handleMoviesSearch }) => {
     }
   }, [])
 
+  useEffect(() => {
+    if (movieInput.value) {
+      handleMoviesSearch(movieInput.value, toggleState);
+    }
+  }, [ toggleState ])
+
   return (
     <section className="search-form">
       <div className="search-form__form-container">
