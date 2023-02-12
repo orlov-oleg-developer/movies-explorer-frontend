@@ -44,7 +44,7 @@ const Register = ({ onRegister, errorMessage }) => {
   return (
     <section className="register">
       <div className="register__title-container">
-        <img className="register__logo" alt="Логотип" src={logoPath}/>
+        <Link to="/"><img className="register__logo" alt="Логотип" src={logoPath}/></Link>
         <h2 className="register__title">Добро пожаловать!</h2>
       </div>
       <AuthForm

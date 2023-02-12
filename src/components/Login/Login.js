@@ -36,7 +36,7 @@ const Login = ({ onLogin, errorMessage }) => {
   return (
     <section className="login">
       <div className="login__title-container">
-        <img className="login__logo" alt="Логотип" src={logoPath}/>
+        <Link to="/"><img className="login__logo" alt="Логотип" src={logoPath}/></Link>
         <h2 className="login__title">Рады видеть!</h2>
       </div>
       <AuthForm
