@@ -105,7 +105,6 @@ function App() {
   }
 
   const handleUpdateUserInfo = (userData) => {
-    setIsLoading(true);
     mainApi.updateUserInfo(userData)
       .then((userData) => {
         setCurrentUser(userData);
@@ -117,7 +116,6 @@ function App() {
         setIsLoading(false);
       })
   }
-
 
   const handleMoviesSearchCb = (searchQuery, toggleState) => {
     setIsLoading(true);

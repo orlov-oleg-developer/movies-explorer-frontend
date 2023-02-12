@@ -2,12 +2,14 @@ import './Profile.css'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js'
 import { useState, useEffect, useContext } from "react";
 import useInput from "../../hooks/useInput";
+import ConfirmationPopup from "../ConfirmationPopup/ConfirmationPopup";
 
-const Profile = ({ handleLogout, handleUpdateUserInfo }) => {
+const Profile = ({ handleLogout, handleUpdateUserInfo}) => {
   const currentUser = useContext(CurrentUserContext);
 
   const [ isInputsValid, setIsInputsValid ] = useState(false);
   const [ isNewData, setIsNewData ] = useState(false);
+  const [ isOpen, setIsOpen ] = useState(false);
 
   const nameInput = useInput(
     '',
@@ -34,14 +36,22 @@ const Profile = ({ handleLogout, handleUpdateUserInfo }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     if(!isNewData) return;
     {isInputsValid &&
-      handleUpdateUserInfo({
-        name: nameInput.value,
-        email: mailInput.value,
-      })
+      setIsOpen(true);
     };
+  }
+
+  const handleConfirm = () => {
+    handleUpdateUserInfo({
+      name: nameInput.value,
+      email: mailInput.value,
+    })
+    setIsOpen(false);
+  }
+
+  const handleClosePopup = () => {
+    setIsOpen(false);
   }
 
   useEffect(() => {
@@ -58,7 +68,12 @@ const Profile = ({ handleLogout, handleUpdateUserInfo }) => {
 
   return (
     <main className="profile">
-      <h1 className="profile__title">Привет, Виталий!</h1>
+      <ConfirmationPopup
+        onConfirm={handleConfirm}
+        onCloseButton={handleClosePopup}
+        isOpen={isOpen}
+      />
+      <h1 className="profile__title">{`Привет, ${currentUser.name}!`}</h1>
       <form
         className="profile__form"
         onSubmit={handleSubmit}
