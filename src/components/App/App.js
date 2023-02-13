@@ -1,7 +1,9 @@
-import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
-import React, { useCallback, useEffect, useState } from 'react';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import './App.css';
+
+import { Redirect, Route, Switch } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
+import useSearch from "../../hooks/useSearch";
+import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import Header from "../Header/Header";
@@ -13,13 +15,13 @@ import Profile from "../Profile/Profile";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import PageNotFound from "../PageNotFound/PageNotFound";
+import Preloader from "../Preloader/Preloader";
+import AttentionPopup from "../AttentionPopup/AttentionPopup";
 
 import mainApi from '../../utils/MainApi';
 import * as auth from '../../utils/auth.js';
 import moviesApi from "../../utils/MoviesApi";
-import useSearch from "../../hooks/useSearch";
-import Preloader from "../Preloader/Preloader";
-import AttentionPopup from "../AttentionPopup/AttentionPopup";
+import windowSizes from "../../utils/constants"
 
 function App() {
   const [ currentUser, setCurrentUser ] = useState({});
@@ -61,10 +63,10 @@ function App() {
   }
 
   const updateTotalCount = () => {
-    if(window.innerWidth >= 1280) {
+    if(window.innerWidth >= windowSizes.screen) {
       setTotalCount(12);
     }
-    else if(window.innerWidth >= 768) {
+    else if(window.innerWidth >= windowSizes.tablet) {
       setTotalCount(8);
     }
     else {
@@ -81,10 +83,10 @@ function App() {
   }
 
   const handleAddMoviesCountCb = () => {
-    if(window.innerWidth >= 1280) {
+    if(window.innerWidth >= windowSizes.screen) {
       setTotalCount(totalCount + 3);
     }
-    else if(window.innerWidth >= 768) {
+    else if(window.innerWidth >= windowSizes.tablet) {
       setTotalCount(totalCount + 2);
     }
     else {
@@ -178,6 +180,7 @@ function App() {
       const res = await auth.register({ mailInput, passwordInput, nameInput });
       if (res) {
         cbLogin({mailInput, passwordInput});
+        setErrorMessage(null);
       }
     } catch (e) {
       const error = await e.json();
@@ -195,6 +198,7 @@ function App() {
       if (token) {
         mainApi.updateToken(token.token);
         cbAuthenticate(token.token);
+        setErrorMessage(null);
       }
     } catch (e) {
       const error = await e.json();
