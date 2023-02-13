@@ -1,5 +1,4 @@
-// export const BASE_URL = 'https://api.movies.developer.nomoredomains.rocks/api'
-export const BASE_URL = 'http://localhost:3005/api'
+export const BASE_URL = 'https://api.movies.developer.nomoredomains.rocks/api'
 
 export const getContent = (token) => {
   return fetch(`${BASE_URL}/users/me`, {

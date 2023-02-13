@@ -348,10 +348,10 @@ function App() {
             handleMenuButton={handleMenuButtonCb}
           />
           <Route path="/signup">
-            {isLoggedIn ? <Redirect to="./" /> : <Register onRegister={cbRegister} errorMessage={errorMessage} isLoading={isLoading}/>}
+            {isLoggedIn ? <Redirect to="./movies" /> : <Register onRegister={cbRegister} errorMessage={errorMessage} isLoading={isLoading}/>}
           </Route>
           <Route path="/signin">
-            {isLoggedIn ? <Redirect to="./" /> : <Login onLogin={cbLogin} errorMessage={errorMessage} isLoading={isLoading}/>}
+            {isLoggedIn ? <Redirect to="./movies" /> : <Login onLogin={cbLogin} errorMessage={errorMessage} isLoading={isLoading}/>}
           </Route>
           <Route path="*">
             <PageNotFound />
