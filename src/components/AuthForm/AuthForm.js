@@ -1,6 +1,6 @@
 import './AuthForm.css'
 
-export function AuthForm({ buttonValue, children, onSubmit, isInputsValid, error }) {
+export function AuthForm({ buttonValue, children, onSubmit, isInputsValid, error, loading }) {
   return (
     <form
       className="auth-form"
@@ -14,7 +14,7 @@ export function AuthForm({ buttonValue, children, onSubmit, isInputsValid, error
         {error && <p className="auth-form__input-error">{error}</p>}
       </div>
       <button
-        disabled={isInputsValid ? false : true}
+        disabled={(isInputsValid && !loading) ? false : true}
         type="submit"
         className={`auth-form__submit ${isInputsValid && "auth-form__submit_active"}`}
         name="form-submit"

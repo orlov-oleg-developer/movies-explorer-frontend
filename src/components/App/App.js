@@ -128,6 +128,7 @@ function App() {
   }
 
   const handleUpdateUserInfo = (userData) => {
+    setIsLoading(true);
     mainApi.updateUserInfo(userData)
       .then((userData) => {
         setCurrentUser(userData);
@@ -140,6 +141,9 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       })
   }
 
@@ -170,6 +174,7 @@ function App() {
 
   const cbRegister = useCallback(async ({ mailInput, passwordInput, nameInput }) => {
     try {
+      setIsLoading(true);
       const res = await auth.register({ mailInput, passwordInput, nameInput });
       if (res) {
         cbLogin({mailInput, passwordInput});
@@ -178,12 +183,15 @@ function App() {
       const error = await e.json();
       setErrorMessage(error.message);
     }
+    finally {
+      setIsLoading(false);
+    }
   }, [])
 
   const cbLogin = useCallback(async ({ mailInput, passwordInput }) => {
     try {
+      setIsLoading(true);
       const token = await auth.authorize({ mailInput, passwordInput });
-      console.log(`token: ${token}`)
       if (token) {
         mainApi.updateToken(token.token);
         cbAuthenticate(token.token);
@@ -191,6 +199,9 @@ function App() {
     } catch (e) {
       const error = await e.json();
       setErrorMessage(error.message);
+    }
+    finally {
+      setIsLoading(false);
     }
   }, [])
 
@@ -323,6 +334,7 @@ function App() {
           <ProtectedRoute
             path="/profile"
             isLoggedIn={isLoggedIn}
+            isLoading={isLoading}
             component={Profile}
             handleLogout={cbLogout}
             handleUpdateUserInfo={handleUpdateUserInfo}
@@ -332,10 +344,10 @@ function App() {
             handleMenuButton={handleMenuButtonCb}
           />
           <Route path="/signup">
-            {isLoggedIn ? <Redirect to="./" /> : <Register onRegister={cbRegister} errorMessage={errorMessage}/>}
+            {isLoggedIn ? <Redirect to="./" /> : <Register onRegister={cbRegister} errorMessage={errorMessage} isLoading={isLoading}/>}
           </Route>
           <Route path="/signin">
-            {isLoggedIn ? <Redirect to="./" /> : <Login onLogin={cbLogin} errorMessage={errorMessage}/>}
+            {isLoggedIn ? <Redirect to="./" /> : <Login onLogin={cbLogin} errorMessage={errorMessage} isLoading={isLoading}/>}
           </Route>
           <Route path="*">
             <PageNotFound />

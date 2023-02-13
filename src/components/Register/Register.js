@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import useInput from "../../hooks/useInput";
 import { useEffect, useState } from "react";
 
-const Register = ({ onRegister, errorMessage }) => {
+const Register = ({ onRegister, errorMessage, isLoading }) => {
   const [ isInputsValid, setIsInputsValid ] = useState(false);
 
   const nameInput = useInput(
@@ -48,6 +48,7 @@ const Register = ({ onRegister, errorMessage }) => {
         <h2 className="register__title">Добро пожаловать!</h2>
       </div>
       <AuthForm
+        loading={isLoading}
         buttonValue={'Зарегистрироваться'}
         onSubmit={handleSubmit}
         isInputsValid={isInputsValid}

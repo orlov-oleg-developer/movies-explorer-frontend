@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import useInput from "../../hooks/useInput";
 import {useEffect, useState} from "react";
 
-const Login = ({ onLogin, errorMessage }) => {
+const Login = ({ onLogin, errorMessage, isLoading }) => {
   const [ isInputsValid, setIsInputsValid ] = useState(false);
 
   const mailInput = useInput(
@@ -40,6 +40,7 @@ const Login = ({ onLogin, errorMessage }) => {
         <h2 className="login__title">Рады видеть!</h2>
       </div>
       <AuthForm
+        loading={isLoading}
         buttonValue={'Войти'}
         onSubmit={handleSubmit}
         isInputsValid={isInputsValid}

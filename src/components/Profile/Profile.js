@@ -5,7 +5,7 @@ import useInput from "../../hooks/useInput";
 import ConfirmationPopup from "../ConfirmationPopup/ConfirmationPopup";
 import Preloader from "../Preloader/Preloader";
 
-const Profile = ({ handleLogout, handleUpdateUserInfo, errorMessage}) => {
+const Profile = ({ handleLogout, handleUpdateUserInfo, errorMessage, isLoading}) => {
   const currentUser = useContext(CurrentUserContext);
 
   const [ isInputsValid, setIsInputsValid ] = useState(false);
@@ -134,7 +134,7 @@ const Profile = ({ handleLogout, handleUpdateUserInfo, errorMessage}) => {
         </div>
         {errorMessage && <p className="profile__server-error">{errorMessage}</p>}
         <button
-          disabled={(isInputsValid && isNewData) ? false : true}
+          disabled={(isInputsValid && isNewData && !isLoading) ? false : true}
           type='submit'
           className={`profile__button`}
         >Редактировать</button>
