@@ -11,8 +11,8 @@ export function AuthForm({ buttonValue, children, onSubmit, isInputsValid, error
     >
       <div className="auth-form__fields">
         {children}
+        {error && <p className="auth-form__input-error">{error}</p>}
       </div>
-      {error && <p className="auth-form__input-error">{error}</p>}
       <button
         disabled={isInputsValid ? false : true}
         type="submit"

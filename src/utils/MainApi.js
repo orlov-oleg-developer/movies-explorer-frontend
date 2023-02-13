@@ -13,7 +13,7 @@ class MainApi {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(`Ошибка: ${res.status}`);
+    return Promise.reject(res);
   }
 
   _request(url, options) {
@@ -75,7 +75,8 @@ class MainApi {
 
 
 const mainApi = new MainApi({
-  baseUrl: 'https://api.movies.developer.nomoredomains.rocks/api',
+  // baseUrl: 'https://api.movies.developer.nomoredomains.rocks/api',
+  baseUrl: 'http://localhost:3005/api',
   headers: {
     'Content-Type': 'application/json'
   }

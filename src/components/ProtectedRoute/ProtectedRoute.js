@@ -4,6 +4,7 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
 const ProtectedRoute = ({ component: Component, isLoggedIn, path, handleMenuButton, ...props }) => {
+
   return (
     <Route>
       <Header

@@ -1,4 +1,5 @@
-export const BASE_URL = 'https://api.movies.developer.nomoredomains.rocks/api'
+// export const BASE_URL = 'https://api.movies.developer.nomoredomains.rocks/api'
+export const BASE_URL = 'http://localhost:3005/api'
 
 export const getContent = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
@@ -42,4 +43,4 @@ export const authorize = ({ mailInput, passwordInput }) => {
     .then(checkResponse);
 }
 
-const checkResponse = (res) => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.statusText}`)
+const checkResponse = (res) => res.ok ? res.json() : Promise.reject(res)

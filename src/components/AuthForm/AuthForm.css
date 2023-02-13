@@ -55,11 +55,12 @@
 .auth-form__input-error {
   box-sizing: border-box;
   width: 100%;
-  padding-left: 15px;
+  padding: 0;
+  margin: 0;
 
   text-align: start;
   font-weight: 400;
-  font-size: 13px;
+  font-size: 14px;
   color: red;
 }
 

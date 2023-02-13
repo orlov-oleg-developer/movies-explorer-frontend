@@ -3,8 +3,9 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext.js'
 import { useState, useEffect, useContext } from "react";
 import useInput from "../../hooks/useInput";
 import ConfirmationPopup from "../ConfirmationPopup/ConfirmationPopup";
+import Preloader from "../Preloader/Preloader";
 
-const Profile = ({ handleLogout, handleUpdateUserInfo}) => {
+const Profile = ({ handleLogout, handleUpdateUserInfo, errorMessage}) => {
   const currentUser = useContext(CurrentUserContext);
 
   const [ isInputsValid, setIsInputsValid ] = useState(false);
@@ -55,9 +56,10 @@ const Profile = ({ handleLogout, handleUpdateUserInfo}) => {
   }
 
   useEffect(() => {
+    if (!currentUser.name) return
     nameInput.onChange({target:{value: currentUser.name}});
     mailInput.onChange({target:{value: currentUser.email}});
-  }, [])
+  }, [currentUser])
 
   useEffect(() => {
     if (nameInput.isInputValid && mailInput.isInputValid) {
@@ -65,6 +67,8 @@ const Profile = ({ handleLogout, handleUpdateUserInfo}) => {
     } else setIsInputsValid(false);
     checkData(currentUser.name, currentUser.email);
   }, [nameInput, mailInput]);
+
+  if (!currentUser.name) return <Preloader />
 
   return (
     <main className="profile">
@@ -128,6 +132,7 @@ const Profile = ({ handleLogout, handleUpdateUserInfo}) => {
             }
           </label>
         </div>
+        {errorMessage && <p className="profile__server-error">{errorMessage}</p>}
         <button
           disabled={(isInputsValid && isNewData) ? false : true}
           type='submit'
