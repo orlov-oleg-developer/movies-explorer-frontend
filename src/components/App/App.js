@@ -47,6 +47,8 @@ function App() {
   const [ savedMovies, setSavedMovies ] = useState([]);
   const searchedSavedMovies = useSearch(savedMovies, searchQuery, toggleState);
 
+  const [ firstMoviesRequest, setFirstMoviesRequest ] = useState(true);
+
   const addOwnerStatusToMovie = (moviesList) => {
     return moviesList.map((movie) => {
       let ownerStatus = false;
@@ -150,6 +152,7 @@ function App() {
   }
 
   const handleMoviesSearchCb = (searchQuery, toggleState) => {
+    if (firstMoviesRequest) setFirstMoviesRequest(false);
     setSearchQuery(searchQuery);
     setToggleState(toggleState);
   }
@@ -164,13 +167,15 @@ function App() {
       const data = await auth.getContent(token);
       if (!data) {
         throw new Error('Неверный токен');
-        setCheckingLogIn(true);
       }
       localStorage.setItem('jwt', token);
       setIsLoggedIn(true);
-      setCheckingLogIn(true);
     } catch (e) {
-      console.log(e);
+      const error = await e.json();
+      console.log(error)
+    }
+    finally {
+      setCheckingLogIn(true);
     }
   }, [])
 
@@ -266,13 +271,14 @@ function App() {
         setSavedMovies(filteredMovieList);
       })
       .catch((err) => console.log(err));
-  }, [currentUser]);
+  }, [ currentUser ]);
 
   useEffect(() => {
     cbTokenCheck();
   }, [ cbTokenCheck ]);
 
   useEffect(() => {
+    if (!firstMoviesRequest)
     setSearchedMoviesWithOwner(() => addOwnerStatusToMovie(searchedMovies));
   }, [ searchedMovies, savedMovies ])
 
