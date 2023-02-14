@@ -81,7 +81,7 @@ function App() {
   }
 
   const handleCloseAttentionPopup = () => {
-    setIsAttentionPopupOpened(false)
+    setIsAttentionPopupOpened(false);
   }
 
   const handleAddMoviesCountCb = () => {
@@ -172,7 +172,7 @@ function App() {
       setIsLoggedIn(true);
     } catch (e) {
       const error = await e.json();
-      console.log(error)
+      console.log(error);
     }
     finally {
       setCheckingLogIn(true);
@@ -218,7 +218,7 @@ function App() {
     try {
       let jwt = localStorage.getItem('jwt');
       if (!jwt) {
-        setCheckingLogIn(true)
+        setCheckingLogIn(true);
         throw new Error('no token');
       }
       cbAuthenticate(jwt);
@@ -264,9 +264,8 @@ function App() {
   useEffect(() => {
     mainApi.getMovies()
       .then((savedMovieList) => {
-        if (currentUser._id === savedMovieList[0].owner._id) console.log(true)
           const filteredMovieList = savedMovieList.filter((savedMovie) => {
-          return savedMovie.owner._id === currentUser._id
+          return savedMovie.owner._id === currentUser._id;
         })
         setSavedMovies(filteredMovieList);
       })

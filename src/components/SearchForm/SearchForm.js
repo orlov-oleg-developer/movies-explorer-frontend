@@ -4,7 +4,7 @@ import arrowButtonIconPath from "../../images/arrow-button.svg";
 import toggleActiveIconPath from "../../images/toggle-active.svg";
 import toggleDisableIconPath from "../../images/toggle-disable.svg";
 import useInput from "../../hooks/useInput.js";
-import {useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const SearchForm = ({ path, handleMoviesSearch }) => {
   const [ toggleState, setToggleState ] = useState(false);

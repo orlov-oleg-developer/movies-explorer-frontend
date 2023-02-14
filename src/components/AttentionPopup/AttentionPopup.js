@@ -1,6 +1,6 @@
 import './AttentionPopup.css'
 
-const AttentionPopup = ({onCloseButton, isOpen, message}) => {
+const AttentionPopup = ({ onCloseButton, isOpen, message }) => {
 
   return (
     <section className={`attention-popup ${isOpen && `attention-popup_opened`}`} aria-label="Секция с попапом">

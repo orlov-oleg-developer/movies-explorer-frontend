@@ -6,7 +6,7 @@ const MoviesCardList = ({ movies, cardPlace, moviesCount, addMoviesCount, handle
 
   let key = new Date();
   const generateKey = () => {
-    key += new Date()
+    key += new Date();
     return key;
   }
 

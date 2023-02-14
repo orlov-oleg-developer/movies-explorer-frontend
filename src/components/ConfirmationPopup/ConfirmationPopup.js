@@ -1,6 +1,6 @@
 import './ConfirmationPopup.css'
 
-const ConfirmationPopup = ({onConfirm, onCloseButton, isOpen}) => {
+const ConfirmationPopup = ({ onConfirm, onCloseButton, isOpen }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
