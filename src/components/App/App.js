@@ -31,6 +31,7 @@ function App() {
   const [ totalCount, setTotalCount ] = useState(0);
   const [ isMenuActive, setIsMenuActive ] = useState(false);
   const [ isAttentionPopupOpened, setIsAttentionPopupOpened ] = useState(false);
+  const [ isFirstRequest, setIsFirstRequest ] = useState(true);
 
   const [ errorMessage, setErrorMessage ] = useState(null);
   const [ profileErrorMessage, setProfileErrorMessage ] = useState(null);
@@ -150,8 +151,9 @@ function App() {
       })
   }
 
-  const handleMoviesSearchCb = (searchQuery, toggleState, isFirstRequest) => {
+  const handleMoviesSearchCb = (searchQuery, toggleState) => {
     if (isFirstRequest) {
+      setIsFirstRequest(false);
       setIsLoading(true);
       moviesApi.getMovies()
         .then((moviesList) => {
@@ -333,6 +335,7 @@ function App() {
 
             isMenuActive={isMenuActive}
             handleMenuButton={handleMenuButtonCb}
+            isFirstRequest={isFirstRequest}
           />
           <ProtectedRoute
             path="/saved-movies"

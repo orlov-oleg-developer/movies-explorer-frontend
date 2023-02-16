@@ -14,6 +14,7 @@ const Movies = (
     isLoading,
     totalCount,
     errorMessage,
+    isFirstRequest,
   }) => {
 
   return (
@@ -22,8 +23,7 @@ const Movies = (
         path={page}
         handleMoviesSearch={handleMoviesSearchCb}
       />
-      {moviesList.length !== 0
-        ?
+      {moviesList.length !== 0 &&
         <MoviesCardList
           movies={moviesList}
           cardPlace={"movie"}
@@ -32,11 +32,11 @@ const Movies = (
           handleLikeMovieCb={handleLikeMovie}
           handleMovieDeleteCb={handleDeleteMovie}
         />
-        :
-        errorMessage
-          ? <p>Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен.
-            Подождите немного и попробуйте ещё раз</p>
-          : <p>Ничего не найдено</p>
+      }
+      {!isFirstRequest && moviesList.length === 0 && <p>Ничего не найдено</p>}
+      {errorMessage &&
+        <p>Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен.
+          Подождите немного и попробуйте ещё раз</p>
       }
       {isLoading && <Preloader />}
     </main>

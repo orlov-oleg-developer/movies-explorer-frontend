@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 
 const SearchForm = ({ path, handleMoviesSearch }) => {
   const [ toggleState, setToggleState ] = useState(false);
-  const [ isFirstRequest, setIsFirstRequest ] = useState(true);
   const [ showError, setShowError ] = useState(false);
 
   const handleToggle = () => {
@@ -22,8 +21,7 @@ const SearchForm = ({ path, handleMoviesSearch }) => {
       setShowError(true);
       return;
     } else {
-      handleMoviesSearch(movieInput.value, toggleState, isFirstRequest);
-      setIsFirstRequest(false);
+      handleMoviesSearch(movieInput.value, toggleState);
       setShowError(false);
     }
   };
@@ -46,15 +44,14 @@ const SearchForm = ({ path, handleMoviesSearch }) => {
       let movieRequest = localStorage.getItem('movieRequest');
       if (movieRequest !== null && movieRequest !== '') {
         movieInput.onChange({target:{value:movieRequest}});
-        handleMoviesSearch(movieInput.value, toggleState, isFirstRequest);
-        setIsFirstRequest(false);
+        handleMoviesSearch(movieInput.value, toggleState);
       }
     }
   }, [])
 
   useEffect(() => {
     if (movieInput.value) {
-      handleMoviesSearch(movieInput.value, toggleState, isFirstRequest);
+      handleMoviesSearch(movieInput.value, toggleState);
     }
   }, [ toggleState ])
 
