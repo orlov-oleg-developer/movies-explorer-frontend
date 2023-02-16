@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 const SearchForm = ({ path, handleMoviesSearch }) => {
   const [ toggleState, setToggleState ] = useState(false);
+  const [ isFirstRequest, setIsFirstRequest ] = useState(true);
 
   const handleToggle = () => {
     setToggleState(!toggleState);
@@ -16,7 +17,8 @@ const SearchForm = ({ path, handleMoviesSearch }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleMoviesSearch(movieInput.value, toggleState);
+    handleMoviesSearch(movieInput.value, toggleState, isFirstRequest);
+    setIsFirstRequest(false);
   };
 
   const movieInput = useInput(
@@ -35,16 +37,17 @@ const SearchForm = ({ path, handleMoviesSearch }) => {
       }
 
       let movieRequest = localStorage.getItem('movieRequest');
-      if (movieRequest !== null) {
+      if (movieRequest !== null && movieRequest !== '') {
         movieInput.onChange({target:{value:movieRequest}});
-        handleMoviesSearch(movieInput.value, toggleState);
+        handleMoviesSearch(movieInput.value, toggleState, isFirstRequest);
+        setIsFirstRequest(false);
       }
     }
   }, [])
 
   useEffect(() => {
     if (movieInput.value) {
-      handleMoviesSearch(movieInput.value, toggleState);
+      handleMoviesSearch(movieInput.value, toggleState, isFirstRequest);
     }
   }, [ toggleState ])
 

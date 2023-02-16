@@ -48,8 +48,6 @@ function App() {
   const [ savedMoviesToggleState, setSavedMoviesToggleState ] = useState(false);
   const searchedSavedMovies = useSearch(savedMovies, savedMoviesSearchQuery, savedMoviesToggleState);
 
-  const [ firstMoviesRequest, setFirstMoviesRequest ] = useState(true);
-
   const addOwnerStatusToMovie = (moviesList) => {
     return moviesList.map((movie) => {
       let ownerStatus = false;
@@ -152,10 +150,25 @@ function App() {
       })
   }
 
-  const handleMoviesSearchCb = (searchQuery, toggleState) => {
-    if (firstMoviesRequest) setFirstMoviesRequest(false);
-    setMoviesSearchQuery(searchQuery);
-    setMoviesToggleState(toggleState);
+  const handleMoviesSearchCb = (searchQuery, toggleState, isFirstRequest) => {
+    console.log(`isFirstRequest: ${isFirstRequest}`)
+    if (isFirstRequest) {
+      setIsLoading(true);
+      moviesApi.getMovies()
+        .then((moviesList) => {
+          setMovies(moviesList);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        })
+      return;
+    } else {
+      setMoviesSearchQuery(searchQuery);
+      setMoviesToggleState(toggleState);
+    }
   }
 
   const handleSavedMoviesSearchCb = (searchQuery, toggleState) => {
@@ -242,6 +255,10 @@ function App() {
   }, []);
 
   useEffect(() => {
+    cbTokenCheck();
+  }, [ cbTokenCheck ]);
+
+  useEffect(() => {
     if (!isLoggedIn) return
     mainApi.getUserInfo()
       .then((userData) => {
@@ -250,18 +267,6 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-
-    setIsLoading(true);
-    moviesApi.getMovies()
-    .then((moviesList) => {
-        setMovies(moviesList);
-      })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      setIsLoading(false);
-    })
   }, [ isLoggedIn ]);
 
   useEffect(() => {
@@ -276,11 +281,11 @@ function App() {
   }, [ currentUser ]);
 
   useEffect(() => {
-    cbTokenCheck();
-  }, [ cbTokenCheck ]);
+    setMoviesSearchQuery(localStorage.getItem('movieRequest'));
+    setMoviesToggleState(JSON.parse(localStorage.getItem('toggle')));
+  }, [ movies ])
 
   useEffect(() => {
-    if (!firstMoviesRequest)
     setSearchedMoviesWithOwner(() => addOwnerStatusToMovie(searchedMovies));
   }, [ searchedMovies, savedMovies ])
 
