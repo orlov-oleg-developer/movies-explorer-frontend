@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 const SearchForm = ({ path, handleMoviesSearch }) => {
   const [ toggleState, setToggleState ] = useState(false);
   const [ isFirstRequest, setIsFirstRequest ] = useState(true);
+  const [ showError, setShowError ] = useState(false);
 
   const handleToggle = () => {
     setToggleState(!toggleState);
@@ -17,8 +18,14 @@ const SearchForm = ({ path, handleMoviesSearch }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleMoviesSearch(movieInput.value, toggleState, isFirstRequest);
-    setIsFirstRequest(false);
+    if (movieInput.value === '') {
+      setShowError(true);
+      return;
+    } else {
+      handleMoviesSearch(movieInput.value, toggleState, isFirstRequest);
+      setIsFirstRequest(false);
+      setShowError(false);
+    }
   };
 
   const movieInput = useInput(
@@ -68,20 +75,19 @@ const SearchForm = ({ path, handleMoviesSearch }) => {
               name="form-movie-input"
               placeholder="Фильм"
               value={movieInput.value}
-              // required
               onChange={(event) => {
                 if (path === '/movies') localStorage.setItem('movieRequest', event.target.value)
                 movieInput.onChange(event)
               }}
             />
-            {(movieInput.isDirty && movieInput.isEmpty.state) &&
+            {(movieInput.isEmpty.state && showError) &&
               <span className="search-form__input-error">Нужно ввести ключевое слово</span>
             }
           </label>
           <button
-            disabled={movieInput.isInputValid ? false : true}
             type={"submit"}
-            className={`search-form__button ${movieInput.isInputValid && 'search-form__button_active'}`}
+            // className={`search-form__button ${movieInput.isInputValid && 'search-form__button_active'}`}
+            className={`search-form__button search-form__button_active`}
             style={{ backgroundImage: `url(${arrowButtonIconPath})`}}
           />
         </form>
