@@ -21,7 +21,7 @@ import AttentionPopup from "../AttentionPopup/AttentionPopup";
 import mainApi from '../../utils/MainApi';
 import * as auth from '../../utils/auth.js';
 import moviesApi from "../../utils/MoviesApi";
-import windowSizes from "../../utils/constants"
+import { SCREEN, TABLET } from "../../config/config";
 
 function App() {
   const [ currentUser, setCurrentUser ] = useState({});
@@ -64,10 +64,10 @@ function App() {
   }
 
   const updateTotalCount = () => {
-    if(window.innerWidth >= windowSizes.screen) {
+    if(window.innerWidth >= SCREEN) {
       setTotalCount(12);
     }
-    else if(window.innerWidth >= windowSizes.tablet) {
+    else if(window.innerWidth >= TABLET) {
       setTotalCount(8);
     }
     else {
@@ -84,10 +84,10 @@ function App() {
   }
 
   const handleAddMoviesCountCb = () => {
-    if(window.innerWidth >= windowSizes.screen) {
+    if(window.innerWidth >= SCREEN) {
       setTotalCount(totalCount + 3);
     }
-    else if(window.innerWidth >= windowSizes.tablet) {
+    else if(window.innerWidth >= TABLET) {
       setTotalCount(totalCount + 2);
     }
     else {
