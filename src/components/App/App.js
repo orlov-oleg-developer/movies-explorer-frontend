@@ -36,16 +36,17 @@ function App() {
   const [ profileErrorMessage, setProfileErrorMessage ] = useState(null);
   const [ attentionMessage, setAttentionMessage ] = useState(null);
 
-  const [ searchQuery, setSearchQuery ] = useState('');
-  const [ toggleState, setToggleState ] = useState(false);
-
   const [ searchedMoviesWithOwner, setSearchedMoviesWithOwner ] = useState([]);
 
   const [ movies, setMovies ] = useState([]);
-  const searchedMovies = useSearch(movies, searchQuery, toggleState);
+  const [ moviesSearchQuery, setMoviesSearchQuery ] = useState('');
+  const [ moviesToggleState, setMoviesToggleState ] = useState(false);
+  const searchedMovies = useSearch(movies, moviesSearchQuery, moviesToggleState);
 
   const [ savedMovies, setSavedMovies ] = useState([]);
-  const searchedSavedMovies = useSearch(savedMovies, searchQuery, toggleState);
+  const [ savedMoviesSearchQuery, setSavedMoviesSearchQuery ] = useState('');
+  const [ savedMoviesToggleState, setSavedMoviesToggleState ] = useState(false);
+  const searchedSavedMovies = useSearch(savedMovies, savedMoviesSearchQuery, savedMoviesToggleState);
 
   const [ firstMoviesRequest, setFirstMoviesRequest ] = useState(true);
 
@@ -153,13 +154,13 @@ function App() {
 
   const handleMoviesSearchCb = (searchQuery, toggleState) => {
     if (firstMoviesRequest) setFirstMoviesRequest(false);
-    setSearchQuery(searchQuery);
-    setToggleState(toggleState);
+    setMoviesSearchQuery(searchQuery);
+    setMoviesToggleState(toggleState);
   }
 
   const handleSavedMoviesSearchCb = (searchQuery, toggleState) => {
-    setSearchQuery(searchQuery);
-    setToggleState(toggleState);
+    setSavedMoviesSearchQuery(searchQuery);
+    setSavedMoviesToggleState(toggleState);
   }
 
   const cbAuthenticate = useCallback(async (token) => {
@@ -229,8 +230,10 @@ function App() {
 
   const cbLogout = useCallback(() => {
     setIsLoggedIn(false);
-    setSearchQuery('');
-    setToggleState(false);
+    setMoviesSearchQuery('');
+    setSavedMoviesSearchQuery('');
+    setMoviesToggleState(false);
+    setSavedMoviesToggleState(false);
     setSavedMovies([]);
     setMovies([]);
     localStorage.removeItem('jwt');
