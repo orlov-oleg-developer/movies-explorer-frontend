@@ -23,7 +23,8 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  gap: 5px;
+  align-items: start;
 }
 
 .movies-card__title {
@@ -39,6 +40,7 @@
 
 .movies-card__duration {
   box-sizing: border-box;
+  min-width: 110px;
   margin: 0;
 
   text-align: end;
@@ -56,7 +58,7 @@
 
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: contain;
+  background-size: cover;
 }
 
 .movies-card__image:hover {

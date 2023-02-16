@@ -1,6 +1,8 @@
 import './MoviesCard.css'
 import checkIconPath from "../../images/check-icon.svg";
-import deleteButtonPath from "../../images/delete-button.svg"
+import deleteButtonPath from "../../images/delete-button.svg";
+
+import toTime from "../../utils/toTime";
 
 const MoviesCard = ({ movie, place, onMovieLike, onDeleteMovie }) => {
   const {
@@ -34,7 +36,7 @@ const MoviesCard = ({ movie, place, onMovieLike, onDeleteMovie }) => {
       className="movies-card">
       <div className="movies-card__text-container">
         <p className="movies-card__title">{nameRU}</p>
-        <p className="movies-card__duration">{duration}</p>
+        <p className="movies-card__duration">{toTime(duration)}</p>
       </div>
       <div
         onClick={() => openInNewTab(trailerLink)}

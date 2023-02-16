@@ -151,7 +151,6 @@ function App() {
   }
 
   const handleMoviesSearchCb = (searchQuery, toggleState, isFirstRequest) => {
-    console.log(`isFirstRequest: ${isFirstRequest}`)
     if (isFirstRequest) {
       setIsLoading(true);
       moviesApi.getMovies()
@@ -281,8 +280,10 @@ function App() {
   }, [ currentUser ]);
 
   useEffect(() => {
-    setMoviesSearchQuery(localStorage.getItem('movieRequest'));
-    setMoviesToggleState(JSON.parse(localStorage.getItem('toggle')));
+    const query = localStorage.getItem('movieRequest');
+    const toggleState = JSON.parse(localStorage.getItem('toggle'));
+    if (query) setMoviesSearchQuery(query);
+    if (toggleState) setMoviesToggleState(toggleState);
   }, [ movies ])
 
   useEffect(() => {
