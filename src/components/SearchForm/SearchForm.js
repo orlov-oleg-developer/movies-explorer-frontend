@@ -6,7 +6,7 @@ import toggleDisableIconPath from "../../images/toggle-disable.svg";
 import useInput from "../../hooks/useInput.js";
 import { useEffect, useState } from "react";
 
-const SearchForm = ({ path, handleMoviesSearch }) => {
+const SearchForm = ({ path, handleMoviesSearch, isFirstRequest}) => {
   const [ toggleState, setToggleState ] = useState(false);
   const [ showError, setShowError ] = useState(false);
 
@@ -35,16 +35,17 @@ const SearchForm = ({ path, handleMoviesSearch }) => {
   );
 
   useEffect(() => {
+    console.log('Mount')
     if (path === '/movies') {
       let toggle = JSON.parse(localStorage.getItem('toggle'));
       if (toggle !== null) {
         setToggleState(toggle);
       }
 
-      let movieRequest = localStorage.getItem('movieRequest');
-      if (movieRequest !== null && movieRequest !== '') {
-        movieInput.onChange({target:{value:movieRequest}});
-        handleMoviesSearch(movieInput.value, toggleState);
+      let request = localStorage.getItem('movieRequest');
+      if (request !== null && request !== '') {
+        movieInput.onChange({target:{value:request}});
+        handleMoviesSearch(request, toggleState);
       }
     }
   }, [])
@@ -83,7 +84,6 @@ const SearchForm = ({ path, handleMoviesSearch }) => {
           </label>
           <button
             type={"submit"}
-            // className={`search-form__button ${movieInput.isInputValid && 'search-form__button_active'}`}
             className={`search-form__button search-form__button_active`}
             style={{ backgroundImage: `url(${arrowButtonIconPath})`}}
           />

@@ -22,6 +22,7 @@ const Movies = (
       <SearchForm
         path={page}
         handleMoviesSearch={handleMoviesSearchCb}
+        isFirstRequest={isFirstRequest}
       />
       {moviesList.length !== 0 &&
         <MoviesCardList

@@ -136,6 +136,8 @@ function App() {
     mainApi.updateUserInfo(userData)
       .then((userData) => {
         setCurrentUser(userData);
+        setAttentionMessage("Данные пользователя изменены");
+        setIsAttentionPopupOpened(true);
       })
       .catch((err) => {
         return err.json();
@@ -153,11 +155,11 @@ function App() {
 
   const handleMoviesSearchCb = (searchQuery, toggleState) => {
     if (isFirstRequest) {
-      setIsFirstRequest(false);
       setIsLoading(true);
       moviesApi.getMovies()
         .then((moviesList) => {
           setMovies(moviesList);
+          setIsFirstRequest(false);
         })
         .catch((err) => {
           console.log(err);
