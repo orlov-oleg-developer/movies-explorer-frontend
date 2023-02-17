@@ -26,6 +26,7 @@ const Movies = (
       />
       {moviesList.length !== 0 &&
         <MoviesCardList
+          path={page}
           movies={moviesList}
           cardPlace={"movie"}
           moviesCount={totalCount}

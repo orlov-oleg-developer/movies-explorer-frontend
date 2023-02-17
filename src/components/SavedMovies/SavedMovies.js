@@ -23,6 +23,7 @@ const SavedMovies = (
       />
       {savedMoviesList.length !== 0 &&
         <MoviesCardList
+          path={page}
           movies={savedMoviesList}
           cardPlace={"saved-movie"}
           moviesCount={totalCount}
