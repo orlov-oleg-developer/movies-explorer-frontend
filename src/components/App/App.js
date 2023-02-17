@@ -107,8 +107,10 @@ function App() {
         return err.json();
       })
       .then((err) => {
-        setAttentionMessage(err.message);
-        setIsAttentionPopupOpened(true);
+        if (err) {
+          setAttentionMessage(err.message);
+          setIsAttentionPopupOpened(true);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -125,8 +127,10 @@ function App() {
         return err.json();
       })
       .then((err) => {
-        setAttentionMessage(err.message);
-        setIsAttentionPopupOpened(true);
+        if (err) {
+          setAttentionMessage(err.message);
+          setIsAttentionPopupOpened(true);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -145,7 +149,7 @@ function App() {
         return err.json();
       })
       .then((err) => {
-        setProfileErrorMessage(err.message);
+        if (err) setProfileErrorMessage(err.message);
       })
       .catch((err) => {
         console.log(err);

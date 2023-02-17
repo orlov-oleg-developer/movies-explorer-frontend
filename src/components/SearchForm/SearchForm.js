@@ -46,7 +46,7 @@ const SearchForm = ({ path, handleMoviesSearch, isFirstRequest}) => {
         movieInput.onChange({target:{value:request}});
         handleMoviesSearch(request, toggleState);
       }
-    }
+    } else handleMoviesSearch('', toggleState);
   }, [])
 
   useEffect(() => {
