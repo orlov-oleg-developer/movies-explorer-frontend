@@ -34,9 +34,9 @@ const Movies = (
           handleMovieDeleteCb={handleDeleteMovie}
         />
       }
-      {!isFirstRequest && moviesList.length === 0 && <p>Ничего не найдено</p>}
+      {!isFirstRequest && moviesList.length === 0 && <p className="movies__error">Ничего не найдено</p>}
       {errorMessage &&
-        <p>Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен.
+        <p className="movies__error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен.
           Подождите немного и попробуйте ещё раз</p>
       }
       {isLoading && <Preloader />}

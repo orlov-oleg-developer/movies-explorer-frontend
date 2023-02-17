@@ -1,0 +1,32 @@
+.saved-movies {
+  min-height: 720px;
+  width: 100%;
+}
+
+.saved-movies__error {
+  color: red;
+
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.saved-movies__message {
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+@media screen and (max-width: 520px) {
+  .saved-movies__error {
+    font-size: 11px;
+    line-height: 18px;
+  }
+
+  .saved-movies__message {
+    font-size: 11px;
+    line-height: 18px;
+  }
+}

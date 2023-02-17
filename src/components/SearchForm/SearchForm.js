@@ -35,7 +35,6 @@ const SearchForm = ({ path, handleMoviesSearch, isFirstRequest}) => {
   );
 
   useEffect(() => {
-    console.log('Mount')
     if (path === '/movies') {
       let toggle = JSON.parse(localStorage.getItem('toggle'));
       if (toggle !== null) {

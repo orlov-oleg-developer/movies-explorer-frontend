@@ -35,6 +35,8 @@ function App() {
 
   const [ errorMessage, setErrorMessage ] = useState(null);
   const [ profileErrorMessage, setProfileErrorMessage ] = useState(null);
+  const [ moviesErrorMessage, setMoviesErrorMessage ] = useState(null);
+  const [ savedMoviesErrorMessage, setSavedMoviesErrorMessage ] = useState(null);
   const [ attentionMessage, setAttentionMessage ] = useState(null);
 
   const [ searchedMoviesWithOwner, setSearchedMoviesWithOwner ] = useState([]);
@@ -160,9 +162,10 @@ function App() {
         .then((moviesList) => {
           setMovies(moviesList);
           setIsFirstRequest(false);
+          setMoviesErrorMessage(null);
         })
         .catch((err) => {
-          console.log(err);
+          setMoviesErrorMessage(err);
         })
         .finally(() => {
           setIsLoading(false);
@@ -246,12 +249,14 @@ function App() {
 
   const cbLogout = useCallback(() => {
     setIsLoggedIn(false);
+    setCurrentUser({})
     setMoviesSearchQuery('');
     setSavedMoviesSearchQuery('');
     setMoviesToggleState(false);
     setSavedMoviesToggleState(false);
     setSavedMovies([]);
     setMovies([]);
+    setIsFirstRequest(true);
     localStorage.removeItem('jwt');
     localStorage.removeItem('toggle');
     localStorage.removeItem('movieRequest');
@@ -279,8 +284,11 @@ function App() {
           return savedMovie.owner._id === currentUser._id;
         })
         setSavedMovies(filteredMovieList);
+        setSavedMoviesErrorMessage(null);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setSavedMoviesErrorMessage(err);
+      })
   }, [ currentUser ]);
 
   useEffect(() => {
@@ -333,7 +341,7 @@ function App() {
             isLoggedIn={isLoggedIn}
             isLoading={isLoading}
             totalCount={totalCount}
-            errorMessage={errorMessage}
+            errorMessage={moviesErrorMessage}
 
             isMenuActive={isMenuActive}
             handleMenuButton={handleMenuButtonCb}
@@ -349,7 +357,7 @@ function App() {
             isLoggedIn={isLoggedIn}
             isLoading={isLoading}
             totalCount={totalCount}
-            errorMessage={errorMessage}
+            errorMessage={savedMoviesErrorMessage}
 
             isMenuActive={isMenuActive}
             handleMenuButton={handleMenuButtonCb}
