@@ -3,12 +3,57 @@ import searchIconPath from "../../images/search-icon.svg";
 import arrowButtonIconPath from "../../images/arrow-button.svg";
 import toggleActiveIconPath from "../../images/toggle-active.svg";
 import toggleDisableIconPath from "../../images/toggle-disable.svg";
-import {useState} from "react";
+import useInput from "../../hooks/useInput.js";
+import { useEffect, useState } from "react";
 
-const SearchForm = () => {
-  const [ toggleState, setToggleState ] = useState(true);
+const SearchForm = ({ path, handleMoviesSearch, isFirstRequest}) => {
+  const [ toggleState, setToggleState ] = useState(false);
+  const [ showError, setShowError ] = useState(false);
 
-  const handleToggle = () => setToggleState(!toggleState)
+  const handleToggle = () => {
+    setToggleState(!toggleState);
+    if (path === '/movies') localStorage.setItem('toggle', JSON.stringify(!toggleState));
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (movieInput.value === '') {
+      setShowError(true);
+      return;
+    } else {
+      handleMoviesSearch(movieInput.value, toggleState);
+      setShowError(false);
+    }
+  };
+
+  const movieInput = useInput(
+    '',
+    {
+      isEmpty: true,
+      minLength: 1,
+    }
+  );
+
+  useEffect(() => {
+    if (path === '/movies') {
+      let toggle = JSON.parse(localStorage.getItem('toggle'));
+      if (toggle !== null) {
+        setToggleState(toggle);
+      }
+
+      let request = localStorage.getItem('movieRequest');
+      if (request !== null && request !== '') {
+        movieInput.onChange({target:{value:request}});
+        handleMoviesSearch(request, toggleState);
+      }
+    } else handleMoviesSearch('', toggleState);
+  }, [])
+
+  useEffect(() => {
+    if (movieInput.value) {
+      handleMoviesSearch(movieInput.value, toggleState);
+    }
+  }, [ toggleState ])
 
   return (
     <section className="search-form">
@@ -19,15 +64,26 @@ const SearchForm = () => {
         />
         <form
           className="search-form__form"
-          onSubmit={(event) => event.preventDefault()}
+          onSubmit={handleSubmit}
         >
-          <input
-            className="search-form__input"
-            placeholder="Фильм"
-            required
-          />
+          <label className="search-form__field">
+            <input
+              className="search-form__input"
+              name="form-movie-input"
+              placeholder="Фильм"
+              value={movieInput.value}
+              onChange={(event) => {
+                if (path === '/movies') localStorage.setItem('movieRequest', event.target.value)
+                movieInput.onChange(event)
+              }}
+            />
+            {(movieInput.isEmpty.state && showError) &&
+              <span className="search-form__input-error">Нужно ввести ключевое слово</span>
+            }
+          </label>
           <button
-            className="search-form__button"
+            type={"submit"}
+            className={`search-form__button search-form__button_active`}
             style={{ backgroundImage: `url(${arrowButtonIconPath})`}}
           />
         </form>

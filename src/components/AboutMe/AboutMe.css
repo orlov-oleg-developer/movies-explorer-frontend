@@ -49,7 +49,7 @@
   line-height: 20px;
 }
 
-.about-me__content-description{
+.about-me__content-description {
   box-sizing: border-box;
   margin: 0;
 
@@ -99,7 +99,7 @@
     line-height: 18px;
   }
 
-  .about-me__content-description{
+  .about-me__content-description {
     font-size: 12px;
     line-height: 18px;
   }
@@ -141,7 +141,7 @@
     line-height: 16px;
   }
 
-  .about-me__content-description{
+  .about-me__content-description {
     font-size: 11px;
     line-height: 16px;
   }

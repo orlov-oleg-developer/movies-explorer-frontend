@@ -38,6 +38,17 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
+
+  background: none;
+  border: none;
+  outline: none;
+
+  transition: opacity 0.2s ease-in-out;
+}
+
+.page-not-found__link:hover {
+  cursor: pointer;
+  opacity: 0.6;
 }
 
 @media screen and (max-width: 850px) {

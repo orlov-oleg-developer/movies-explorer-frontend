@@ -1,5 +1,5 @@
 import './Menu.css';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import accountIconPath from "../../images/account-icon.svg";
 import menuActiveIconPath from "../../images/menu-active-icon.svg";
 

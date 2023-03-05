@@ -1,12 +1,24 @@
 import './AuthForm.css'
 
-export function AuthForm({ buttonValue, children }) {
+export function AuthForm({ buttonValue, children, onSubmit, isInputsValid, error, loading }) {
   return (
-    <form className="auth-form">
+    <form
+      className="auth-form"
+      onSubmit={(event) => {
+        event.preventDefault();
+        onSubmit();
+      }}
+    >
       <div className="auth-form__fields">
         {children}
+        {error && <p className="auth-form__input-error">{error}</p>}
       </div>
-      <input type="submit" className="auth-form__submit" name="form-submit" value={buttonValue}/>
+      <button
+        disabled={(isInputsValid && !loading) ? false : true}
+        type="submit"
+        className={`auth-form__submit ${isInputsValid && "auth-form__submit_active"}`}
+        name="form-submit"
+      >{buttonValue}</button>
     </form>
   )
 }
