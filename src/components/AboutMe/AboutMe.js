@@ -1,6 +1,7 @@
 import './AboutMe.css'
 import PageTitle from "../UI/PageTitle/PageTitle";
 import imagePath from '../../images/photo.png';
+import linkToIconPath from "../../images/link-icon.svg";
 
 const AboutMe = () => {
   return (
@@ -8,15 +9,26 @@ const AboutMe = () => {
       <PageTitle title={"Студент"} mixClass={"about-me__title"}/>
       <article className="about-me__grid">
         <div className="about-me__content">
-          <h3 className="about-me__content-title">Виталий</h3>
-          <p className="about-me__content-subtitle">Фронтенд-разработчик, 30 лет</p>
-          <p className="about-me__content-description">Я родился и живу в Саратове, закончил факультет экономики СГУ.
-            У меня есть жена и дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом. Недавно начал кодить.
-            С 2015 года работал в компании «СКБ Контур». После того, как прошёл курс по веб-разработке, начал заниматься
-            фриланс-заказами и ушёл с постоянной работы.
+          <h3 className="about-me__content-title">Орлов Олег</h3>
+          <p className="about-me__content-subtitle">Фронтенд-разработчик, 25 лет</p>
+          <p className="about-me__content-description">Еще с детства я увлекся программированием.
+            Решив большое количество задач, я понял, что могу объяснять сложные вещи простыми словами.
+            Для этого я записывал обучающие ролики на YouTube и устраивал небольшие соревнования с подписчиками.
+            В университете я начал разрабатывать ПО для студентов, чтобы им было проще разбираться в материале.
+            За реализацией одного из проектов я познакомился с веб-разработкой и понял, что я давно искал именно этого.
+            Меня поразило то, что для реализации любых идей можно воспользоваться веб-технологиями, что открывает
+            большой спектр возможностей. Мне интересна веб разработка в целом, но больше я склоняюсь к фронтенд разработке,
+            так как быстро получаешь результат.
           </p>
         </div>
-        <a className="about-me__content-link" href="#">Github</a>
+
+        <a className="about-me__content-link" href="#">
+          <p className="about-me__link-text">GitHub</p>
+          <div
+            className="about-me__link-icon"
+            style={{ backgroundImage: `url(${linkToIconPath})`}}
+          />
+        </a>
         <img className="about-me__content-photo" src={imagePath} alt="Фотография студента"/>
       </article>
     </section>

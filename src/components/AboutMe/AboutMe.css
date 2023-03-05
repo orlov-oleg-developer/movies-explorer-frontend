@@ -13,6 +13,7 @@
   display: grid;
   grid-template-columns: minmax(min-content, 600px) 270px;
   column-gap: 49px;
+  row-gap: 10px;
   align-content: space-between;
   grid-template-areas:
   "content  photo"
@@ -63,21 +64,44 @@
   box-sizing: border-box;
   margin: 0;
 
-  text-align: start;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+
+  align-self: end;
+
+  grid-area: link;
+  align-self: flex-end;
+
   text-decoration: none;
+}
+
+.about-me__link-text {
+  margin: 0;
+
+  text-align: start;
 
   color: black;
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
+}
 
-  grid-area: link;
-  align-self: flex-end;
+.about-me__link-icon {
+  width: 15px;
+  height: 25px;
+
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
 .about-me__content-photo {
   grid-area: photo;
   width: 100%;
+
+  border-radius: 10px;
   margin: 0 auto;
 }
 
