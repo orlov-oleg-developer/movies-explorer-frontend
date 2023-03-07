@@ -11,7 +11,7 @@ interface Profile {
 }
 
 const Profile: FC<Profile> = ({ onLogout }) => {
-  const { getUserInfo, updateUserInfo } = useActions()
+  const { updateUserInfo } = useActions()
 
   const {user, error, loading} = useTypedSelector(state => state.user);
   const [ isInputsValid, setIsInputsValid ] = useState<boolean>(false);
@@ -59,10 +59,6 @@ const Profile: FC<Profile> = ({ onLogout }) => {
   const handleClosePopup = () => {
     setIsOpen(false);
   }
-
-  useEffect(() => {
-    getUserInfo();
-  }, []);
 
   useEffect(() => {
     if (!user.name) return

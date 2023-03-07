@@ -1,6 +1,6 @@
 import { URL } from '../../config/config'
-import {Dispatch} from "redux";
-import {UserAction, UserActionTypes} from "../../types/user";
+import { Dispatch } from "redux";
+import { UserAction, UserActionTypes } from "../../types/user";
 
 interface ProfileData {
   name: string;
@@ -24,6 +24,7 @@ export const getUserInfo = () => {
         })
       const user = await response.json();
       dispatch({type: UserActionTypes.FETCH_USER_SUCCESS, payload: user})
+      return user;
     } catch (e: any) {
       const errorMessage = await e.json();
       dispatch({
