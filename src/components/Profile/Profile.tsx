@@ -6,7 +6,11 @@ import useInput from "../../hooks/useInput";
 import Preloader from "../Preloader/Preloader";
 import {useActions} from "../../hooks/useActions";
 
-const Profile: FC = () => {
+interface Profile {
+  onLogout: () => void;
+}
+
+const Profile: FC<Profile> = ({ onLogout }) => {
   const { getUserInfo, updateUserInfo } = useActions()
 
   const {user, error, loading} = useTypedSelector(state => state.user);
@@ -144,8 +148,7 @@ const Profile: FC = () => {
           className={`profile__button`}
         >Редактировать</button>
       </form>
-      <button className="profile__button profile__button_color_red">Выйти из аккаунта</button>
-      {/*<button onClick={handleLogout} className="profile__button profile__button_color_red">Выйти из аккаунта</button>*/}
+      <button onClick={onLogout} className="profile__button profile__button_color_red">Выйти из аккаунта</button>
     </main>
   );
 };
