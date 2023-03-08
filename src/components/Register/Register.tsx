@@ -1,18 +1,27 @@
-import './Login.css'
-import React, {FC, useEffect, useState} from 'react';
-import {Link} from "react-router-dom";
-import AuthForm from "../AuthForm/AuthForm";
+import './Register.css'
+import React, {FC} from 'react';
 import logoPath from "../../images/logo.svg";
+import AuthForm from '../AuthForm/AuthForm'
+import { Link } from "react-router-dom";
 import useInput from "../../hooks/useInput";
+import { useEffect, useState } from "react";
 import {useActions} from "../../hooks/useActions";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 
-const Login: FC = () => {
-  const { authorize } = useActions();
+const Register: FC = () => {
+  const { register, authorize } = useActions();
 
   const {token, error, loading} = useTypedSelector(state => state.token);
   const [ isInputsValid, setIsInputsValid ] = useState(false);
 
+  const nameInput = useInput(
+    '',
+    {
+      minLength: 2,
+      maxLength: 30,
+      isEmpty: true,
+      isName: true,
+    })
   const mailInput = useInput(
     '',
     {
@@ -28,29 +37,53 @@ const Login: FC = () => {
       isEmpty: true,
     })
 
-  const handleSubmit = () => {
-    authorize({ mailInput: mailInput.value, passwordInput: passwordInput.value });
+  const handleSubmit = async () => {
+    const result = await register({ nameInput: nameInput.value, mailInput: mailInput.value, passwordInput: passwordInput.value });
+    if (!error) authorize({ mailInput: mailInput.value, passwordInput: passwordInput.value })
   }
 
   useEffect(() => {
-    if (mailInput.isInputValid && passwordInput.isInputValid) {
+    if (nameInput.isInputValid && mailInput.isInputValid && passwordInput.isInputValid) {
       setIsInputsValid(true);
     } else setIsInputsValid(false);
-  }, [mailInput, passwordInput]);
+  }, [nameInput, mailInput, passwordInput]);
 
   return (
-    <section className="login">
-      <div className="login__title-container">
-        <Link to="/"><img className="login__logo" alt="Логотип" src={logoPath}/></Link>
-        <h2 className="login__title">Рады видеть!</h2>
+    <section className="register">
+      <div className="register__title-container">
+        <Link to="/"><img className="register__logo" alt="Логотип" src={logoPath}/></Link>
+        <h2 className="register__title">Добро пожаловать!</h2>
       </div>
       <AuthForm
         loading={loading}
-        buttonValue={'Войти'}
+        buttonValue={'Зарегистрироваться'}
         onSubmit={handleSubmit}
         isInputsValid={isInputsValid}
         error={error}
       >
+        <label className="auth-form__field">
+          Имя
+          <input
+            className="auth-form__input"
+            type="string"
+            name="form-name-input"
+            value={nameInput.value}
+            onChange={(event) => nameInput.onChange(event.target.value)}
+            onBlur={() => nameInput.onBlur()}
+          />
+          {(nameInput.isDirty && nameInput.isEmpty.state) &&
+            <span className="auth-form__input-error">{nameInput.isEmpty.errorMessage}</span>
+          }
+          {(nameInput.isDirty && nameInput.minLengthError.state) &&
+            <span className="auth-form__input-error">{nameInput.minLengthError.errorMessage}</span>
+          }
+          {(nameInput.isDirty && nameInput.maxLengthError.state) &&
+            <span className="auth-form__input-error">{nameInput.maxLengthError.errorMessage}</span>
+          }
+          {(nameInput.isDirty && nameInput.isNameError.state) &&
+            <span className="auth-form__input-error">{mailInput.isNameError.errorMessage}</span>
+          }
+        </label>
         <label className="auth-form__field">
           E-mail
           <input
@@ -92,11 +125,11 @@ const Login: FC = () => {
           }
         </label>
       </AuthForm>
-      <Link to="/signup" className="login__link">Ещё не зарегистрированы?
-        <span className="login__link_bold">Регистрация</span>
+      <Link to="/signin" className="register__link">Уже зарегистрированы?
+        <span className="register__link_bold">Войти</span>
       </Link>
     </section>
   );
 };
 
-export default Login;
+export default Register;

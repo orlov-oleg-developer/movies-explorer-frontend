@@ -9,10 +9,13 @@ import Profile from "../Profile/Profile";
 import Login from "../Login/Login";
 import {useActions} from "../../hooks/useActions";
 import Preloader from "../Preloader/Preloader";
+import Register from "../Register/Register";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
 
 const App : FC = () => {
   const [ isLoggedIn, setIsLoggedIn ] = useState<boolean>(false);
   const [ checkingLogIn, setCheckingLogIn ] = useState<boolean>(false);
+  const {token, error, loading} = useTypedSelector(state => state.token);
 
   const { getUserInfo } = useActions()
 
@@ -36,7 +39,7 @@ const App : FC = () => {
     } finally {
       setCheckingLogIn(true);
     }
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     cbTokenCheck();
@@ -64,6 +67,10 @@ const App : FC = () => {
         <Route
           path="/signin"
           element={isLoggedIn? <Navigate to={'/'}/> : <Login />}
+        />
+        <Route
+          path="/signup"
+          element={isLoggedIn? <Navigate to={'/'}/> : <Register />}
         />
 
         <Route element={<ProtectedRoute isLoggedIn={isLoggedIn} />} >
