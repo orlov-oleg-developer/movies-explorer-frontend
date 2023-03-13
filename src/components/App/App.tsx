@@ -11,13 +11,45 @@ import {useActions} from "../../hooks/useActions";
 import Preloader from "../Preloader/Preloader";
 import Register from "../Register/Register";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
+import TechsDigital from "../TechsDigital/TechsDigital";
+import Movies from "../Movies/Movies";
+import { SCREEN, TABLET } from '../../config/config'
+import SavedMovies from "../SavedMovies/SavedMovies";
 
 const App : FC = () => {
   const [ isLoggedIn, setIsLoggedIn ] = useState<boolean>(false);
+  const [ isFirstRequest, setIsFirstRequest ] = useState(true);
   const [ checkingLogIn, setCheckingLogIn ] = useState<boolean>(false);
-  const {token, error, loading} = useTypedSelector(state => state.token);
+  const [ totalCount, setTotalCount ] = useState(0);
+
+  const { getSavedMovies } = useActions();
+  const { token, error, loading } = useTypedSelector(state => state.token);
 
   const { getUserInfo } = useActions()
+
+  const updateTotalCount = () => {
+    if(window.innerWidth >= SCREEN) {
+      setTotalCount(12);
+    }
+    else if(window.innerWidth >= TABLET) {
+      setTotalCount(8);
+    }
+    else {
+      setTotalCount(5);
+    }
+  }
+
+  const handleAddMoviesCountCb = () => {
+    if(window.innerWidth >= SCREEN) {
+      setTotalCount(totalCount + 3);
+    }
+    else if(window.innerWidth >= TABLET) {
+      setTotalCount(totalCount + 2);
+    }
+    else {
+      setTotalCount(totalCount + 2);
+    }
+  }
 
   const cbLogout = useCallback(() => {
     setIsLoggedIn(false);
@@ -33,6 +65,7 @@ const App : FC = () => {
       const user = await getUserInfo();
       if (user.name) {
         setIsLoggedIn(true);
+        getSavedMovies();
       }
     } catch (e) {
       console.log(e);
@@ -44,6 +77,13 @@ const App : FC = () => {
   useEffect(() => {
     cbTokenCheck();
   }, [ cbTokenCheck ]);
+
+  useEffect(() => {
+    updateTotalCount();
+
+    window.addEventListener('resize', updateTotalCount);
+    return () => window.removeEventListener('resize', updateTotalCount);
+  }, [])
 
   if (!checkingLogIn) return <Preloader />
 
@@ -63,6 +103,7 @@ const App : FC = () => {
           </>
         }
         />
+        <Route path="/digital" element={ <TechsDigital /> }/>
 
         <Route
           path="/signin"
@@ -81,6 +122,26 @@ const App : FC = () => {
                 isLoggedIn={isLoggedIn}
               />
               <Profile onLogout={cbLogout}/>
+            </>
+          }/>
+
+          <Route path='/movies' element={
+            <>
+              <Header
+                className='App__header'
+                isLoggedIn={isLoggedIn}
+              />
+              <Movies isLoggedIn={isLoggedIn} isFirstRequest={isFirstRequest} totalCount={totalCount}/>
+            </>
+          }/>
+
+          <Route path='/saved-movies' element={
+            <>
+              <Header
+                className='App__header'
+                isLoggedIn={isLoggedIn}
+              />
+              <SavedMovies isLoggedIn={isLoggedIn} totalCount={totalCount}/>
             </>
           }/>
         </Route>

@@ -28,11 +28,11 @@ const Header: FC<HeaderProps> = ( { className, isLoggedIn } ) => {
             <nav className="header__links">
               <NavLink
                 to="/movies"
-                className={ ({ isActive }) => isActive ? "header__links-link_dedicated" : 'header__links-link' }
+                className={ ({ isActive }) => isActive ? "header__links-link header__links-link_dedicated" : 'header__links-link' }
               >Фильмы</NavLink>
               <NavLink
                 to="/saved-movies"
-                className={ ({ isActive }) => isActive ? "header__links-link_dedicated" : 'header__links-link' }
+                className={ ({ isActive }) => isActive ? "header__links-link header__links-link_dedicated" : 'header__links-link' }
               >Сохранённые фильмы</NavLink>
             </nav>
             <Link to="/profile" className="header__navigation-account">

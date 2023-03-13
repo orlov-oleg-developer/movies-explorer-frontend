@@ -38,8 +38,8 @@ const Register: FC = () => {
     })
 
   const handleSubmit = async () => {
-    const result = await register({ nameInput: nameInput.value, mailInput: mailInput.value, passwordInput: passwordInput.value });
-    if (!error) authorize({ mailInput: mailInput.value, passwordInput: passwordInput.value })
+    await register({ nameInput: nameInput.value, mailInput: mailInput.value, passwordInput: passwordInput.value });
+    // authorize({ mailInput: mailInput.value, passwordInput: passwordInput.value })
   }
 
   useEffect(() => {
