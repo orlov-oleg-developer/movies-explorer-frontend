@@ -1,4 +1,4 @@
-## Проект: Портфоли с поиском фильмов | Front-end
+## Проект: Портфолио и сервис по поиску фильмов | Front-end
 
 ### Demo - [ссылка](https://movies.developer.nomoredomains.rocks/)
 ### Ссылка на макет - [Ссылка](https://disk.yandex.ru/d/x_tQ3ELDw5-_Zw)
