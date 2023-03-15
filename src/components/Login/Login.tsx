@@ -10,7 +10,7 @@ import {useTypedSelector} from "../../hooks/useTypedSelector";
 const Login: FC = () => {
   const { authorize } = useActions();
 
-  const {token, error, loading} = useTypedSelector(state => state.token);
+  const { token, error, loading} = useTypedSelector(state => state.token);
   const [ isInputsValid, setIsInputsValid ] = useState(false);
 
   const mailInput = useInput(
@@ -28,8 +28,8 @@ const Login: FC = () => {
       isEmpty: true,
     })
 
-  const handleSubmit = () => {
-    authorize({ mailInput: mailInput.value, passwordInput: passwordInput.value });
+  const handleSubmit = async () => {
+    await authorize({ mailInput: mailInput.value, passwordInput: passwordInput.value });
   }
 
   useEffect(() => {

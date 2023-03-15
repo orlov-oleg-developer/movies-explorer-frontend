@@ -7,7 +7,8 @@ export interface TokenState {
 export enum TokenActionTypes {
   FETCH_TOKEN = "FETCH_TOKEN",
   FETCH_TOKEN_SUCCESS = 'FETCH_TOKEN_SUCCESS',
-  FETCH_TOKEN_ERROR = 'FETCH_TOKEN_ERROR'
+  FETCH_TOKEN_ERROR = 'FETCH_TOKEN_ERROR',
+  SET_TOKEN = 'SET_TOKEN'
 }
 
 interface FetchTokenAction {
@@ -24,4 +25,9 @@ interface FetchTokenErrorAction {
   payload: string;
 }
 
-export type TokenAction = FetchTokenAction | FetchTokenSuccessAction | FetchTokenErrorAction
+interface SetTokenAction {
+  type: TokenActionTypes.SET_TOKEN
+  payload: string;
+}
+
+export type TokenAction = FetchTokenAction | FetchTokenSuccessAction | FetchTokenErrorAction | SetTokenAction

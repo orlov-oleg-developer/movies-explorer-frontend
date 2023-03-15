@@ -6,6 +6,7 @@ import {IMovie} from "../../types/movies";
 import {useActions} from "../../hooks/useActions";
 import {ISavedMovie} from "../../types/savedMovies";
 import toTime from "../../utils/toTime";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
 
 interface MoviesCardProps {
   movie: IMovie;
@@ -14,6 +15,7 @@ interface MoviesCardProps {
 
 const MoviesCard: FC<MoviesCardProps> = ({ movie, place }) => {
   const { addSavedMovies, deleteSavedMovies } = useActions()
+  const { token } = useTypedSelector(state => state.token);
 
   const {
     id,
@@ -30,11 +32,11 @@ const MoviesCard: FC<MoviesCardProps> = ({ movie, place }) => {
   } = movie;
 
   function handleMovieLike(movie: ISavedMovie) {
-    addSavedMovies(movie);
+    addSavedMovies(movie, token);
   }
 
   function handleDeleteMovie(movieID: string) {
-    deleteSavedMovies(movieID);
+    deleteSavedMovies(movieID, token);
   }
 
   const openInNewTab = (url: any) => {

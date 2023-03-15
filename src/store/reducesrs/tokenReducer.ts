@@ -14,6 +14,8 @@ export const tokenReducer = (state: TokenState = initialState, action: TokenActi
       return {loading: false, error: null, token: action.payload}
     case TokenActionTypes.FETCH_TOKEN_ERROR:
       return {...state, loading: false, error: action.payload}
+    case TokenActionTypes.SET_TOKEN:
+      return {loading: false, error: null, token: action.payload}
     default:
       return state
   }

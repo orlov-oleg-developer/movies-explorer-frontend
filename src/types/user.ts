@@ -13,7 +13,8 @@ export interface UserState {
 export enum UserActionTypes {
   FETCH_USER = "FETCH_USER",
   FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS',
-  FETCH_USER_ERROR = 'FETCH_USER_ERROR'
+  FETCH_USER_ERROR = 'FETCH_USER_ERROR',
+  SET_USER = 'SET_USER'
 }
 
 interface FetchUserAction {
@@ -30,4 +31,9 @@ interface FetchUserErrorAction {
   payload: string;
 }
 
-export type UserAction = FetchUserAction | FetchUserSuccessAction | FetchUserErrorAction
+interface SetUserAction {
+  type: UserActionTypes.SET_USER;
+  payload: IUser;
+}
+
+export type UserAction = FetchUserAction | FetchUserSuccessAction | FetchUserErrorAction | SetUserAction

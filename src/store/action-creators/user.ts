@@ -7,9 +7,53 @@ interface ProfileData {
   email: string;
 }
 
-const token = localStorage.getItem('jwt');
+interface RegisterProps {
+  nameInput: string,
+  mailInput: string,
+  passwordInput: string,
+}
 
-export const getUserInfo = () => {
+const jwt = localStorage.getItem('jwt');
+
+export const register = ({ mailInput, passwordInput, nameInput }: RegisterProps) => {
+  return async (dispatch: Dispatch<UserAction>) => {
+    try {
+      dispatch({type: UserActionTypes.FETCH_USER})
+      const res = await fetch(`${URL}/signup`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: nameInput,
+          email: mailInput,
+          password: passwordInput,
+        })
+      })
+      if (res.ok) {
+        const userInfo = await res.json();
+        dispatch({
+          type: UserActionTypes.SET_USER,
+          payload: {
+            _id: userInfo.user._id,
+            name: userInfo.user.name,
+            email: userInfo.user.email
+          }
+        })
+      } else await Promise.reject(res)
+    }
+    catch (e: any) {
+      const errorMessage = await e.json();
+      dispatch({
+        type: UserActionTypes.FETCH_USER_ERROR,
+        payload: errorMessage.message
+      })
+    }
+  }
+}
+
+export const getUserInfo = (jwt: string) => {
   return async (dispatch: Dispatch<UserAction>) => {
     try {
       dispatch({type: UserActionTypes.FETCH_USER})
@@ -19,12 +63,13 @@ export const getUserInfo = () => {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            "Authorization" : `Bearer ${token}`
+            "Authorization" : `Bearer ${jwt}`
           }
         })
       const user = await response.json();
-      dispatch({type: UserActionTypes.FETCH_USER_SUCCESS, payload: user})
-      return user;
+      if (user?.name) {
+        dispatch({type: UserActionTypes.FETCH_USER_SUCCESS, payload: user})
+      } else throw new Error('token is not valid');
     } catch (e: any) {
       const errorMessage = await e.json();
       dispatch({
@@ -45,7 +90,7 @@ export const updateUserInfo = (profileData: ProfileData) => {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            "Authorization" : `Bearer ${token}`
+            "Authorization" : `Bearer ${jwt}`
           },
           body: JSON.stringify({
             name: profileData.name,
@@ -62,4 +107,8 @@ export const updateUserInfo = (profileData: ProfileData) => {
       })
     }
   }
+}
+
+export const setUser = (profileData: ProfileData) => {
+  return {type: UserActionTypes.SET_USER, payload: profileData}
 }

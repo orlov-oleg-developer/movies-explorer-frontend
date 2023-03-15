@@ -11,7 +11,7 @@ import {useTypedSelector} from "../../hooks/useTypedSelector";
 const Register: FC = () => {
   const { register, authorize } = useActions();
 
-  const {token, error, loading} = useTypedSelector(state => state.token);
+  const { user, error, loading } = useTypedSelector(state => state.user);
   const [ isInputsValid, setIsInputsValid ] = useState(false);
 
   const nameInput = useInput(
@@ -39,7 +39,6 @@ const Register: FC = () => {
 
   const handleSubmit = async () => {
     await register({ nameInput: nameInput.value, mailInput: mailInput.value, passwordInput: passwordInput.value });
-    // authorize({ mailInput: mailInput.value, passwordInput: passwordInput.value })
   }
 
   useEffect(() => {
@@ -47,6 +46,12 @@ const Register: FC = () => {
       setIsInputsValid(true);
     } else setIsInputsValid(false);
   }, [nameInput, mailInput, passwordInput]);
+
+  useEffect(() => {
+    if (user.name) {
+      authorize({ mailInput: mailInput.value, passwordInput: passwordInput.value })
+    }
+  }, [ user ])
 
   return (
     <section className="register">

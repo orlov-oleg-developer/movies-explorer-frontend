@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect, useState} from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import {Route, Routes, Navigate } from "react-router-dom";
 import './App.css';
 import Header from "../Header/Header";
@@ -18,14 +18,13 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 
 const App : FC = () => {
   const [ isLoggedIn, setIsLoggedIn ] = useState<boolean>(false);
-  const [ isFirstRequest, setIsFirstRequest ] = useState(true);
   const [ checkingLogIn, setCheckingLogIn ] = useState<boolean>(false);
-  const [ totalCount, setTotalCount ] = useState(0);
+  const [ totalCount, setTotalCount ] = useState<number>(0);
 
-  const { getSavedMovies } = useActions();
-  const { token, error, loading } = useTypedSelector(state => state.token);
+  const { getSavedMovies, getUserInfo, setToken } = useActions();
 
-  const { getUserInfo } = useActions()
+  const { token } = useTypedSelector(state => state.token);
+  const { user, error, loading } = useTypedSelector(state => state.user);
 
   const updateTotalCount = () => {
     if(window.innerWidth >= SCREEN) {
@@ -54,29 +53,42 @@ const App : FC = () => {
   const cbLogout = useCallback(() => {
     setIsLoggedIn(false);
     localStorage.removeItem('jwt');
+    localStorage.removeItem('toggle');
+    localStorage.removeItem('movieRequest');
   }, []);
 
   const cbTokenCheck = useCallback(async () => {
+    console.log(`Чекаем токен`)
     try {
       let jwt = localStorage.getItem('jwt');
       if (!jwt) {
+        setCheckingLogIn(true);
         throw new Error('no token');
       }
-      const user = await getUserInfo();
-      if (user.name) {
-        setIsLoggedIn(true);
-        getSavedMovies();
-      }
+      console.log(`Токен есть: ${jwt}`)
+      getUserInfo(jwt);
     } catch (e) {
       console.log(e);
-    } finally {
-      setCheckingLogIn(true);
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     cbTokenCheck();
-  }, [ cbTokenCheck ]);
+  }, [ cbTokenCheck, token ]);
+
+  useEffect(() => {
+    if (user?.name) {
+      console.log(`Пользователь получен: ${user.name}`)
+      setToken(token);
+      setIsLoggedIn(true);
+      setCheckingLogIn(true);
+    } if (error) setCheckingLogIn(true);
+  }, [ user ])
+
+  useEffect(() => {
+    if (!isLoggedIn) return
+    getSavedMovies(token);
+  }, [ token ]);
 
   useEffect(() => {
     updateTotalCount();
@@ -131,7 +143,7 @@ const App : FC = () => {
                 className='App__header'
                 isLoggedIn={isLoggedIn}
               />
-              <Movies isLoggedIn={isLoggedIn} isFirstRequest={isFirstRequest} totalCount={totalCount}/>
+              <Movies isLoggedIn={isLoggedIn} totalCount={totalCount}/>
             </>
           }/>
 

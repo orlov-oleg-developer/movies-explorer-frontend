@@ -1,10 +1,9 @@
 import { URL } from '../../config/config'
 import { Dispatch } from "redux";
 import {ISavedMovie, SavedMoviesAction, SavedMoviesActionTypes} from "../../types/savedMovies";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
 
-const token = localStorage.getItem('jwt');
-
-export const getSavedMovies = () => {
+export const getSavedMovies = (token: string) => {
   return async (dispatch: Dispatch<SavedMoviesAction>) => {
     try {
       dispatch({type: SavedMoviesActionTypes.FETCH_SAVED_MOVIES})
@@ -29,7 +28,7 @@ export const getSavedMovies = () => {
   }
 }
 
-export const addSavedMovies = (movieData: ISavedMovie) => {
+export const addSavedMovies = (movieData: ISavedMovie, token: string) => {
   return async (dispatch: Dispatch<SavedMoviesAction>) => {
     try {
       dispatch({type: SavedMoviesActionTypes.FETCH_SAVED_MOVIES})
@@ -55,7 +54,7 @@ export const addSavedMovies = (movieData: ISavedMovie) => {
   }
 }
 
-export const deleteSavedMovies = (movieID: string) => {
+export const deleteSavedMovies = (movieID: string, token: string) => {
   return async (dispatch: Dispatch<SavedMoviesAction>) => {
     try {
       dispatch({type: SavedMoviesActionTypes.FETCH_SAVED_MOVIES})

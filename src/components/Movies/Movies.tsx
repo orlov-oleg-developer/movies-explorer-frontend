@@ -9,13 +9,12 @@ import Preloader from "../Preloader/Preloader";
 
 interface MoviesProps {
   isLoggedIn: boolean;
-  isFirstRequest: boolean;
   totalCount: number,
 }
 
-const Movies: FC<MoviesProps> = ({isLoggedIn, isFirstRequest, totalCount}) => {
+const Movies: FC<MoviesProps> = ({isLoggedIn, totalCount}) => {
   const { getMovies, setMovies } = useActions();
-
+  const [ isFirstRequest, setIsFirstRequest ] = useState(true);
   const { movies, error, loading } = useTypedSelector(state => state.movies);
   const { savedMovies } = useTypedSelector(state => state.savedMovies);
   const [ moviesSearchQuery, setMoviesSearchQuery ] = useState('');
@@ -24,6 +23,10 @@ const Movies: FC<MoviesProps> = ({isLoggedIn, isFirstRequest, totalCount}) => {
   const [ searchedMoviesWithOwner, setSearchedMoviesWithOwner ] = useState<any[]>([]);
 
   const handleMoviesSearchCb = (searchQuery: string, toggleState: boolean) => {
+    if (isFirstRequest) {
+      setIsFirstRequest(true)
+      return;
+    }
     if (searchQuery) {
       setMoviesSearchQuery(searchQuery)
     };
@@ -74,7 +77,7 @@ const Movies: FC<MoviesProps> = ({isLoggedIn, isFirstRequest, totalCount}) => {
           // addMoviesCount={handleAddMoviesCountCb}
         />
       }
-      {searchedMoviesWithOwner.length === 0 && <p className="movies__error">Ничего не найдено</p>}
+      {!isFirstRequest && searchedMoviesWithOwner.length === 0 && <p className="movies__error">Ничего не найдено</p>}
       {/*{!isFirstRequest && movies.length === 0 && <p className="movies__error">Ничего не найдено</p>}*/}
       {/*{errorMessage &&*/}
       {/*  <p className="movies__error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен.*/}
