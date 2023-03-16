@@ -1,0 +1,73 @@
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.techs-digital {
+  padding: 200px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-self: center;
+
+  background: #10111A;
+  position: relative;
+}
+
+.techs-digital__green-circle {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  border: 2px solid #01EC8A;
+
+  position: absolute;
+
+  z-index: 0;
+}
+
+.techs-digital__green-dashes {
+  background-image: url("../../images/green-dashes.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  width: 263px;
+  height: 263px;
+
+  position: absolute;
+
+  z-index: 0;
+
+  animation: rotation 12s ease-in-out infinite;
+}
+
+.techs-digital__green-dashes-2 {
+  background-image: url("../../images/green-dashes-2.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  width: 303px;
+  height: 223px;
+
+  position: absolute;
+  top: 218px;
+
+  z-index: 0;
+
+  animation: rotation 8s ease-in-out infinite reverse;
+}
+
+.techs-digital__text {
+  width: 175px;
+
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 58px;
+  text-align: center;
+  color: #01EC8A;
+}

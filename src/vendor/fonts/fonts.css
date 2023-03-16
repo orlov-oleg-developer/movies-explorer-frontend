@@ -21,3 +21,27 @@
 	src: url('../fonts/Inter/Inter-Black.woff2') format('woff2');
 	src: url('../fonts/Inter/Inter-Black.woff') format('woff');
 }
+
+@font-face {
+  font-family: 'Ubuntu';
+  font-weight: 400;
+  font-style: normal;
+  src: url('../fonts/Ubuntu/Ubuntu-Regular.woff2') format('woff2');
+  src: url('../fonts/Ubuntu/Ubuntu-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  font-weight: 500;
+  font-style: normal;
+  src: url('../fonts/Ubuntu/Ubuntu-Medium.woff2') format('woff2');
+  src: url('../fonts/Ubuntu/Ubuntu-Medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  font-weight: 900;
+  font-style: normal;
+  src: url('../fonts/Ubuntu/Ubuntu-Bold.woff2') format('woff2');
+  src: url('../fonts/Ubuntu/Ubuntu-Bold.woff') format('woff');
+}
