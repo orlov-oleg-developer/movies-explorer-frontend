@@ -1,8 +1,8 @@
 const SCREEN = 1280;
 const TABLET = 768;
-const URL = 'http://localhost:3005/api';
+const URL = 'https://api.movies.developer.nomoredomains.rocks/api';
 
-export  {
+export {
   SCREEN,
   TABLET,
   URL,
