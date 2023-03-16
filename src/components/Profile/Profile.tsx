@@ -1,10 +1,10 @@
 import './Profile.css'
-import React, {FC, useEffect, useState} from 'react';
-import {useTypedSelector} from "../../hooks/useTypedSelector";
-import ConfirmationPopup from "../ConfirmationPopup/ConfirmationPopup";
+import React, { FC, useEffect, useState } from 'react';
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { useActions } from "../../hooks/useActions";
 import useInput from "../../hooks/useInput";
+import ConfirmationPopup from "../ConfirmationPopup/ConfirmationPopup";
 import Preloader from "../Preloader/Preloader";
-import {useActions} from "../../hooks/useActions";
 
 interface Profile {
   onLogout: () => void;
@@ -13,10 +13,10 @@ interface Profile {
 const Profile: FC<Profile> = ({ onLogout }) => {
   const { updateUserInfo } = useActions()
 
-  const {user, error, loading} = useTypedSelector(state => state.user);
-  const [ isInputsValid, setIsInputsValid ] = useState<boolean>(false);
-  const [ isNewData, setIsNewData ] = useState<boolean>(false);
-  const [ isOpen, setIsOpen ] = useState<boolean>(false);
+  const { user, error, loading } = useTypedSelector(state => state.user);
+  const [isInputsValid, setIsInputsValid] = useState<boolean>(false);
+  const [isNewData, setIsNewData] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const nameInput = useInput(
     '',
@@ -36,16 +36,16 @@ const Profile: FC<Profile> = ({ onLogout }) => {
     })
 
   const checkData = (name: string, email: string): void => {
-    if(name === nameInput.value && email === mailInput.value) {
+    if (name === nameInput.value && email === mailInput.value) {
       setIsNewData(false);
     } else setIsNewData(true);
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if(!isNewData) return;
+    if (!isNewData) return;
     console.log(nameInput, mailInput)
-    {isInputsValid && setIsOpen(true)};
+    { isInputsValid && setIsOpen(true) };
   }
 
   const handleConfirm = (): void => {

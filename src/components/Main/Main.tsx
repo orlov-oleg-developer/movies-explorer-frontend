@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Promo from "../Promo/Promo";
 import AboutProject from "../AboutProject/AboutProject";
 import Techs from "../Techs/Techs";
@@ -7,9 +7,9 @@ import Portfolio from "../Portfolio/Portfolio";
 
 const Main: FC = () => {
 
-  const [ aboutProjectRef, setAboutProjectRef ] = useState<Element | null>(null);
-  const [ techsRef, setTechsRef ] = useState<Element | null>(null);
-  const [ aboutMeRef, setAboutMeRef ] = useState<Element | null>(null);
+  const [aboutProjectRef, setAboutProjectRef] = useState<Element | null>(null);
+  const [techsRef, setTechsRef] = useState<Element | null>(null);
+  const [aboutMeRef, setAboutMeRef] = useState<Element | null>(null);
 
   useEffect(() => {
     setAboutProjectRef(window.document.querySelector('.about-project'));

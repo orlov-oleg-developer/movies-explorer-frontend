@@ -1,52 +1,42 @@
+import './App.css';
+
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { Route, Routes, Navigate } from "react-router-dom";
-import './App.css';
+import { useActions } from "../../hooks/useActions";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+
+import { SCREEN, TABLET } from '../../config/config'
+
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Main from "../Main/Main";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import Profile from "../Profile/Profile";
 import Login from "../Login/Login";
-import { useActions } from "../../hooks/useActions";
-import Preloader from "../Preloader/Preloader";
 import Register from "../Register/Register";
-import { useTypedSelector } from "../../hooks/useTypedSelector";
 import TechsDigital from "../TechsDigital/TechsDigital";
 import Movies from "../Movies/Movies";
-import { SCREEN, TABLET } from '../../config/config'
 import SavedMovies from "../SavedMovies/SavedMovies";
+import Preloader from "../Preloader/Preloader";
 
 const App: FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [checkingLogIn, setCheckingLogIn] = useState<boolean>(false);
-  const [totalCount, setTotalCount] = useState<number>(0);
 
-  const { getSavedMovies, getUserInfo, setToken } = useActions();
+  const { getSavedMovies, getUserInfo, setToken, setCardsTotalCount } = useActions();
 
   const { token } = useTypedSelector(state => state.token);
   const { user, error, loading } = useTypedSelector(state => state.user);
 
   const updateTotalCount = () => {
     if (window.innerWidth >= SCREEN) {
-      setTotalCount(12);
+      setCardsTotalCount(12);
     }
     else if (window.innerWidth >= TABLET) {
-      setTotalCount(8);
+      setCardsTotalCount(8);
     }
     else {
-      setTotalCount(5);
-    }
-  }
-
-  const handleAddMoviesCountCb = () => {
-    if (window.innerWidth >= SCREEN) {
-      setTotalCount(totalCount + 3);
-    }
-    else if (window.innerWidth >= TABLET) {
-      setTotalCount(totalCount + 2);
-    }
-    else {
-      setTotalCount(totalCount + 2);
+      setCardsTotalCount(5);
     }
   }
 
@@ -54,6 +44,7 @@ const App: FC = () => {
     setIsLoggedIn(false);
     setToken('')
     localStorage.removeItem('jwt');
+    localStorage.removeItem('movies');
     localStorage.removeItem('toggle');
     localStorage.removeItem('movieRequest');
   }, []);
@@ -141,7 +132,9 @@ const App: FC = () => {
                 className='App__header'
                 isLoggedIn={isLoggedIn}
               />
-              <Movies isLoggedIn={isLoggedIn} totalCount={totalCount} />
+              <Movies
+                isLoggedIn={isLoggedIn}
+              />
             </>
           } />
 
@@ -151,7 +144,9 @@ const App: FC = () => {
                 className='App__header'
                 isLoggedIn={isLoggedIn}
               />
-              <SavedMovies isLoggedIn={isLoggedIn} totalCount={totalCount} />
+              <SavedMovies
+                isLoggedIn={isLoggedIn}
+              />
             </>
           } />
         </Route>

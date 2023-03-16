@@ -1,5 +1,5 @@
 import './SearchForm.css'
-import React, {FC, useEffect, useState} from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import useInput from "../../hooks/useInput";
 import searchIconPath from "../../images/search-icon.svg";
 import arrowButtonIconPath from "../../images/arrow-button.svg";
@@ -12,9 +12,9 @@ interface SearchFormProps {
   isFirstRequest?: boolean;
 }
 
-const SearchForm: FC<SearchFormProps> = ({path, handleMoviesSearch, isFirstRequest}) => {
-  const [ toggleState, setToggleState ] = useState(false);
-  const [ showError, setShowError ] = useState(false);
+const SearchForm: FC<SearchFormProps> = ({ path, handleMoviesSearch, isFirstRequest }) => {
+  const [toggleState, setToggleState] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const handleToggle = () => {
     setToggleState(!toggleState);
@@ -59,14 +59,14 @@ const SearchForm: FC<SearchFormProps> = ({path, handleMoviesSearch, isFirstReque
     if (movieInput.value) {
       handleMoviesSearch(movieInput.value, toggleState);
     }
-  }, [ toggleState ])
+  }, [toggleState])
 
   return (
     <section className="search-form">
       <div className="search-form__form-container">
         <div
           className="search-form__search-icon"
-          style={{ backgroundImage: `url(${searchIconPath})`}}
+          style={{ backgroundImage: `url(${searchIconPath})` }}
         />
         <form
           className="search-form__form"
@@ -90,14 +90,14 @@ const SearchForm: FC<SearchFormProps> = ({path, handleMoviesSearch, isFirstReque
           <button
             type={"submit"}
             className={`search-form__button search-form__button_active`}
-            style={{ backgroundImage: `url(${arrowButtonIconPath})`}}
+            style={{ backgroundImage: `url(${arrowButtonIconPath})` }}
           />
         </form>
       </div>
       <div className="search-form__filter">
         <button
           className="search-form__toggle"
-          style={{ backgroundImage: `url(${toggleState ? toggleActiveIconPath : toggleDisableIconPath})`}}
+          style={{ backgroundImage: `url(${toggleState ? toggleActiveIconPath : toggleDisableIconPath})` }}
           onClick={handleToggle}
         />
         <p className="search-form__filter-name">Короткометражки</p>

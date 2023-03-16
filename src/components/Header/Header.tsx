@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, { FC, useState } from 'react';
 import { NavLink, Link } from "react-router-dom";
 import './Header.css'
 import Menu from '../Menu/Menu';
@@ -11,8 +11,8 @@ interface HeaderProps {
   isLoggedIn: boolean;
 }
 
-const Header: FC<HeaderProps> = ( { className, isLoggedIn } ) => {
-  const [ isMenuActive, setIsMenuActive ] = useState<boolean>(false);
+const Header: FC<HeaderProps> = ({ className, isLoggedIn }) => {
+  const [isMenuActive, setIsMenuActive] = useState<boolean>(false);
 
   const handleMenuButton = (): void => {
     setIsMenuActive(!isMenuActive);
@@ -21,27 +21,27 @@ const Header: FC<HeaderProps> = ( { className, isLoggedIn } ) => {
   return (
     <>
       <header className={`header ${className}`}>
-        <Link to="/"><img className="header__logo" alt="Логотип" src={logoPath}/></Link>
+        <Link to="/"><img className="header__logo" alt="Логотип" src={logoPath} /></Link>
         {isLoggedIn
           ?
           <div className="header__navigation">
             <nav className="header__links">
               <NavLink
                 to="/movies"
-                className={ ({ isActive }) => isActive ? "header__links-link header__links-link_dedicated" : 'header__links-link' }
+                className={({ isActive }) => isActive ? "header__links-link header__links-link_dedicated" : 'header__links-link'}
               >Фильмы</NavLink>
               <NavLink
                 to="/saved-movies"
-                className={ ({ isActive }) => isActive ? "header__links-link header__links-link_dedicated" : 'header__links-link' }
+                className={({ isActive }) => isActive ? "header__links-link header__links-link_dedicated" : 'header__links-link'}
               >Сохранённые фильмы</NavLink>
             </nav>
             <Link to="/profile" className="header__navigation-account">
-              <img className="header__navigation-icon" alt="Иконка аккаунта" src={accountIconPath}/>
+              <img className="header__navigation-icon" alt="Иконка аккаунта" src={accountIconPath} />
               <p className="header__navigation-text">Аккаунт</p>
             </Link >
             <div
               className="header__menu-button"
-              style={{ backgroundImage: `url(${menuIconPath})`}}
+              style={{ backgroundImage: `url(${menuIconPath})` }}
               onClick={handleMenuButton}
             />
           </div>

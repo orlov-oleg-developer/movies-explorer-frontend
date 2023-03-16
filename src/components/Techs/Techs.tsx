@@ -1,5 +1,5 @@
 import './Techs.css'
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import PageTitle from "../PageTitle/PageTitle";
 
 interface TechsProps {
@@ -9,7 +9,7 @@ interface TechsProps {
 const Techs: FC<TechsProps> = ({ techs }) => {
   return (
     <section className="techs">
-      <PageTitle title={"Технологии"} mixClass={"techs__title"}/>
+      <PageTitle title={"Технологии"} mixClass={"techs__title"} />
       <article className="techs__content">
         <h2 className="techs__main-title">7 технологий</h2>
         <p className="techs__description">На курсе веб-разработки мы освоили технологии, которые применили в

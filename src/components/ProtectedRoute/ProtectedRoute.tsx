@@ -1,7 +1,6 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import { Outlet } from 'react-router'
 import { Navigate } from "react-router-dom";
-import Header from "../Header/Header";
 
 interface ProtectedRouteProps {
   isLoggedIn: boolean;
@@ -9,7 +8,7 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: FC<ProtectedRouteProps> = ({ isLoggedIn }) => {
   return (
-    isLoggedIn ? <Outlet/> : <Navigate to="/" replace={true} />
+    isLoggedIn ? <Outlet /> : <Navigate to="/" replace={true} />
   );
 };
 

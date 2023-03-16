@@ -2,12 +2,12 @@ import './AboutMe.css'
 import PageTitle from "../PageTitle/PageTitle"
 import imagePath from '../../images/photo.png';
 import linkToIconPath from "../../images/link-icon.svg";
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 
 const AboutMe: FC = () => {
   return (
     <section className="about-me">
-      <PageTitle title={"Студент"} mixClass={"about-me__title"}/>
+      <PageTitle title={"Студент"} mixClass={"about-me__title"} />
       <article className="about-me__grid">
         <div className="about-me__content">
           <h3 className="about-me__content-title">Орлов Олег</h3>
@@ -23,14 +23,14 @@ const AboutMe: FC = () => {
           </p>
         </div>
 
-        <a className="about-me__content-link" href="#">
+        <a className="about-me__content-link" href="https://github.com/orlov-oleg-developer" target="_blank">
           <p className="about-me__link-text">GitHub</p>
           <div
             className="about-me__link-icon"
-            style={{ backgroundImage: `url(${linkToIconPath})`}}
+            style={{ backgroundImage: `url(${linkToIconPath})` }}
           />
         </a>
-        <img className="about-me__content-photo" src={imagePath} alt="Фотография студента"/>
+        <img className="about-me__content-photo" src={imagePath} alt="Фотография студента" />
       </article>
     </section>
   );

@@ -16,14 +16,16 @@ export const getSavedMovies = (token: string, user: IUser) => {
             "Authorization": `Bearer ${token}`
           }
         })
-      const movies = await response.json();
-      const filteredMovies = movies.filter((movie: ISavedMovie) => movie.owner._id === user._id)
-      dispatch({ type: SavedMoviesActionTypes.FETCH_SAVED_MOVIES_SUCCESS, payload: filteredMovies });
+      if (response.ok) {
+        const movies = await response.json();
+        const filteredMovies = movies.filter((movie: ISavedMovie) => movie.owner._id === user._id)
+        dispatch({ type: SavedMoviesActionTypes.FETCH_SAVED_MOVIES_SUCCESS, payload: filteredMovies });
+      } else await Promise.reject(response);
     } catch (e: any) {
       const errorMessage = await e.json();
       dispatch({
         type: SavedMoviesActionTypes.FETCH_SAVED_MOVIES_ERROR,
-        payload: errorMessage
+        payload: errorMessage.message
       })
     }
   }

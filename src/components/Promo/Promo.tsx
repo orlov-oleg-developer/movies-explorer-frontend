@@ -1,5 +1,5 @@
 import './Promo.css'
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import NavTab from "../NavTab/NavTab";
 
 interface PromoProps {

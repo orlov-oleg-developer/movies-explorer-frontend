@@ -1,17 +1,17 @@
 import './Login.css'
-import React, {FC, useEffect, useState} from 'react';
-import {Link} from "react-router-dom";
+import React, { FC, useEffect, useState } from 'react';
+import { useActions } from "../../hooks/useActions";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { Link } from "react-router-dom";
 import AuthForm from "../AuthForm/AuthForm";
 import logoPath from "../../images/logo.svg";
 import useInput from "../../hooks/useInput";
-import {useActions} from "../../hooks/useActions";
-import {useTypedSelector} from "../../hooks/useTypedSelector";
 
 const Login: FC = () => {
   const { authorize } = useActions();
 
-  const { token, error, loading} = useTypedSelector(state => state.token);
-  const [ isInputsValid, setIsInputsValid ] = useState(false);
+  const { token, error, loading } = useTypedSelector(state => state.token);
+  const [isInputsValid, setIsInputsValid] = useState(false);
 
   const mailInput = useInput(
     '',
@@ -41,7 +41,7 @@ const Login: FC = () => {
   return (
     <section className="login">
       <div className="login__title-container">
-        <Link to="/"><img className="login__logo" alt="Логотип" src={logoPath}/></Link>
+        <Link to="/"><img className="login__logo" alt="Логотип" src={logoPath} /></Link>
         <h2 className="login__title">Рады видеть!</h2>
       </div>
       <AuthForm

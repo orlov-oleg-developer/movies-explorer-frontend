@@ -1,5 +1,5 @@
 import './NavTab.css'
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 
 interface NavTabProps {
   aboutProject: Element | null;
@@ -12,17 +12,20 @@ const NavTab: FC<NavTabProps> = ({ aboutProject, techs, aboutMe }) => {
     <nav className="nav-tab">
       <button
         onClick={() => aboutProject?.scrollIntoView({
-          behavior: 'smooth'})}
+          behavior: 'smooth'
+        })}
         className="nav-tab__link"
       >О проекте</button>
       <button
         onClick={() => techs?.scrollIntoView({
-          behavior: 'smooth'})}
+          behavior: 'smooth'
+        })}
         className="nav-tab__link"
       >Технологии</button>
       <button
         onClick={() => aboutMe?.scrollIntoView({
-          behavior: 'smooth'})}
+          behavior: 'smooth'
+        })}
         className="nav-tab__link"
       >Студент</button>
     </nav>

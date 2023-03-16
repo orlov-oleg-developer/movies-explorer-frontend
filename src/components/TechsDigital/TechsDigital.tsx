@@ -1,5 +1,5 @@
 import './TechsDigital.css'
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 
 const TechsDigital: FC = () => {
 

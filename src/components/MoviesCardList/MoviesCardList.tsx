@@ -1,16 +1,19 @@
 import './MoviesCardList.css'
-import React, {FC} from 'react';
+import React, { FC } from 'react';
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 import MoviesCard from "../MoviesCard/MoviesCard";
 
 interface MoviesCardListProps {
   path: string;
   movies: any[];
   cardPlace: string;
-  moviesCount: number
+  onAddMoviesCount?: () => void;
 }
 
-const MoviesCardList: FC<MoviesCardListProps> = ({ path, movies, cardPlace, moviesCount }) => {
+const MoviesCardList: FC<MoviesCardListProps> = ({ path, movies, cardPlace, onAddMoviesCount }) => {
   let list = [];
+
+  const { count } = useTypedSelector(state => state.cardsTotalCount);
 
   let key = String(new Date());
   const generateKey = () => {
@@ -19,7 +22,7 @@ const MoviesCardList: FC<MoviesCardListProps> = ({ path, movies, cardPlace, movi
   }
 
   if (path === '/movies') {
-    for (let i = 0; i < moviesCount && i < movies.length; i++) {
+    for (let i = 0; i < count && i < movies.length; i++) {
       list.push(
         <MoviesCard
           key={generateKey()}
@@ -45,11 +48,11 @@ const MoviesCardList: FC<MoviesCardListProps> = ({ path, movies, cardPlace, movi
       <ul className="movies-card-list">
         {list}
       </ul>
-      {(movies.length > moviesCount && path === '/movies') &&
+      {(movies.length > count && path === '/movies') &&
         <div className="movies-card-list__button-container">
           <button
             className="movies-card-list__button"
-            // onClick={addMoviesCount}
+            onClick={onAddMoviesCount}
           >
             Ещё
           </button>

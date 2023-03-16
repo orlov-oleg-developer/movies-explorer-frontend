@@ -1,18 +1,18 @@
 import './Register.css'
-import React, {FC} from 'react';
-import logoPath from "../../images/logo.svg";
-import AuthForm from '../AuthForm/AuthForm'
-import { Link } from "react-router-dom";
-import useInput from "../../hooks/useInput";
+import React, { FC } from 'react';
 import { useEffect, useState } from "react";
-import {useActions} from "../../hooks/useActions";
-import {useTypedSelector} from "../../hooks/useTypedSelector";
+import { Link } from "react-router-dom";
+import { useActions } from "../../hooks/useActions";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import useInput from "../../hooks/useInput";
+import AuthForm from '../AuthForm/AuthForm'
+import logoPath from "../../images/logo.svg";
 
 const Register: FC = () => {
   const { register, authorize } = useActions();
 
   const { user, error, loading } = useTypedSelector(state => state.user);
-  const [ isInputsValid, setIsInputsValid ] = useState(false);
+  const [isInputsValid, setIsInputsValid] = useState(false);
 
   const nameInput = useInput(
     '',
@@ -51,12 +51,12 @@ const Register: FC = () => {
     if (user.name) {
       authorize({ mailInput: mailInput.value, passwordInput: passwordInput.value })
     }
-  }, [ user ])
+  }, [user])
 
   return (
     <section className="register">
       <div className="register__title-container">
-        <Link to="/"><img className="register__logo" alt="Логотип" src={logoPath}/></Link>
+        <Link to="/"><img className="register__logo" alt="Логотип" src={logoPath} /></Link>
         <h2 className="register__title">Добро пожаловать!</h2>
       </div>
       <AuthForm

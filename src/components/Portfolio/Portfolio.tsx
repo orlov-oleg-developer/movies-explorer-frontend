@@ -1,6 +1,6 @@
 import './Portfolio.css'
+import React, { FC } from 'react';
 import linkToIconPath from "../../images/link-icon.svg";
-import React, {FC} from 'react';
 
 const Portfolio: FC = () => {
   return (
@@ -16,7 +16,7 @@ const Portfolio: FC = () => {
             <p className="portfolio__list-link-text">Статичный сайт</p>
             <div
               className="portfolio__list-icon"
-              style={{ backgroundImage: `url(${linkToIconPath})`}}
+              style={{ backgroundImage: `url(${linkToIconPath})` }}
             />
           </a>
         </li>
@@ -29,7 +29,7 @@ const Portfolio: FC = () => {
             <p className="portfolio__list-link-text">Адаптивный сайт</p>
             <div
               className="portfolio__list-icon"
-              style={{ backgroundImage: `url(${linkToIconPath})`}}
+              style={{ backgroundImage: `url(${linkToIconPath})` }}
             />
           </a>
         </li>
@@ -42,7 +42,7 @@ const Portfolio: FC = () => {
             <p className="portfolio__list-link-text">Одностраничное приложение</p>
             <div
               className="portfolio__list-icon"
-              style={{ backgroundImage: `url(${linkToIconPath})`}}
+              style={{ backgroundImage: `url(${linkToIconPath})` }}
             />
           </a>
         </li>

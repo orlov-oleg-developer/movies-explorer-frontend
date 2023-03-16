@@ -1,12 +1,12 @@
 import './MoviesCard.css'
-import React, {FC} from 'react';
+import React, { FC } from 'react';
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { useActions } from "../../hooks/useActions";
+import { IMovie } from "../../types/movies";
+import { ISavedMovie } from "../../types/savedMovies";
+import toTime from "../../utils/toTime";
 import checkIconPath from "../../images/check-icon.svg";
 import deleteButtonPath from "../../images/delete-button.svg";
-import {IMovie} from "../../types/movies";
-import {useActions} from "../../hooks/useActions";
-import {ISavedMovie} from "../../types/savedMovies";
-import toTime from "../../utils/toTime";
-import {useTypedSelector} from "../../hooks/useTypedSelector";
 
 interface MoviesCardProps {
   movie: IMovie;
@@ -53,38 +53,38 @@ const MoviesCard: FC<MoviesCardProps> = ({ movie, place }) => {
       <div
         onClick={() => openInNewTab(trailerLink)}
         className="movies-card__image"
-        style={{ backgroundImage: image.url ? `url(https://api.nomoreparties.co/${image.url})` : `url(${image})`}}
+        style={{ backgroundImage: image.url ? `url(https://api.nomoreparties.co/${image.url})` : `url(${image})` }}
       />
       {place === "movie"
         ?
         (owner
-            ?
-            <button
-              onClick={() => {if (movie._id) handleDeleteMovie(movie._id)}}
-              className="movies-card__button movies-card__button_type_check"
-              style={{ backgroundImage: `url(${checkIconPath})` }}
-            />
-            :
-            <button
-              onClick={() => handleMovieLike({
-                country: country,
-                director: director,
-                duration: duration,
-                year: created_at,
-                description: description,
-                image: `https://api.nomoreparties.co/${image.url}`,
-                trailerLink: movie.trailerLink,
-                thumbnail: `https://api.nomoreparties.co/${image.formats.thumbnail.url}`,
-                movieId: String(id),
-                nameRU: nameRU,
-                nameEN: nameEN
-              })}
-              className="movies-card__text"
-            >Сохранить</button>
+          ?
+          <button
+            onClick={() => { if (movie._id) handleDeleteMovie(movie._id) }}
+            className="movies-card__button movies-card__button_type_check"
+            style={{ backgroundImage: `url(${checkIconPath})` }}
+          />
+          :
+          <button
+            onClick={() => handleMovieLike({
+              country: country,
+              director: director,
+              duration: duration,
+              year: created_at,
+              description: description,
+              image: `https://api.nomoreparties.co/${image.url}`,
+              trailerLink: movie.trailerLink,
+              thumbnail: `https://api.nomoreparties.co/${image.formats.thumbnail.url}`,
+              movieId: String(id),
+              nameRU: nameRU,
+              nameEN: nameEN
+            })}
+            className="movies-card__text"
+          >Сохранить</button>
         )
         :
         <button
-          onClick={() => {if (movie._id) handleDeleteMovie(movie._id)}}
+          onClick={() => { if (movie._id) handleDeleteMovie(movie._id) }}
           className="movies-card__button"
           style={{ backgroundImage: `url(${deleteButtonPath})` }}
         />

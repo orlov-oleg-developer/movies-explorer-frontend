@@ -1,11 +1,11 @@
 import './AboutProject.css'
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import PageTitle from "../PageTitle/PageTitle";
 
 const AboutProject: FC = () => {
   return (
     <section className={`about-project`}>
-      <PageTitle title={"О проекте"} mixClass={"about-project__title"}/>
+      <PageTitle title={"О проекте"} mixClass={"about-project__title"} />
       <article className="about-project__content">
         <div className="about-project__content-item">
           <h3 className="about-project__content-title">Дипломный проект включал 5 этапов</h3>
