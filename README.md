@@ -5,12 +5,13 @@
 ### Pull Requests - [Ссылка](https://github.com/orlov-oleg-developer/movies-explorer-frontend/pull/2)
 
 ---
-Данный проект - дипломный проект Яндекс Практикума. Работа направлена на закрепление изученного материала по Front-end разработке на React.js. В проекте используется следующий стек:
+Данный проект - улучшенный дипломный проект Яндекс Практикума. В рамках работы код был переписан на TypeScript, интегрирован Redux. В проекте используется следующий стек:
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white) 
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+![TypeScript](https://img.shields.io/badge/TypeScript-323330?style=for-the-badge&logo=typescript&logoColor=F7DF1E)
 ![React.js](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)
 
 ---
 
