@@ -38,8 +38,6 @@ const SavedMovies: FC<SavedMoviesProps> = ({ isLoggedIn, totalCount }) => {
           movies={searchedSavedMovies}
           cardPlace={"saved-movie"}
           moviesCount={totalCount}
-          // addMoviesCount={handleAddMoviesCountCb}
-          // handleMovieDeleteCb={handleDeleteMovie}
         />
       }
       {savedMovies.length === 0 && <p className="saved-movies__message">Сохраненных фильмов не найдено</p>}

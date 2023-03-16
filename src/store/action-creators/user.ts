@@ -18,7 +18,7 @@ const jwt = localStorage.getItem('jwt');
 export const register = ({ mailInput, passwordInput, nameInput }: RegisterProps) => {
   return async (dispatch: Dispatch<UserAction>) => {
     try {
-      dispatch({type: UserActionTypes.FETCH_USER})
+      dispatch({ type: UserActionTypes.FETCH_USER })
       const res = await fetch(`${URL}/signup`, {
         method: 'POST',
         headers: {
@@ -56,25 +56,25 @@ export const register = ({ mailInput, passwordInput, nameInput }: RegisterProps)
 export const getUserInfo = (jwt: string) => {
   return async (dispatch: Dispatch<UserAction>) => {
     try {
-      dispatch({type: UserActionTypes.FETCH_USER})
-      const response = await fetch(`${URL}/users/me`,
+      dispatch({ type: UserActionTypes.FETCH_USER })
+      const res = await fetch(`${URL}/users/me`,
         {
           method: 'GET',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            "Authorization" : `Bearer ${jwt}`
+            "Authorization": `Bearer ${jwt}`
           }
         })
-      const user = await response.json();
-      if (user?.name) {
-        dispatch({type: UserActionTypes.FETCH_USER_SUCCESS, payload: user})
-      } else throw new Error('token is not valid');
+      if (res.ok) {
+        const user = await res.json();
+        dispatch({ type: UserActionTypes.FETCH_USER_SUCCESS, payload: user })
+      } else await Promise.reject(res)
     } catch (e: any) {
       const errorMessage = await e.json();
       dispatch({
         type: UserActionTypes.FETCH_USER_ERROR,
-        payload: errorMessage
+        payload: errorMessage.message
       })
     }
   }
@@ -83,14 +83,14 @@ export const getUserInfo = (jwt: string) => {
 export const updateUserInfo = (profileData: ProfileData) => {
   return async (dispatch: Dispatch<UserAction>) => {
     try {
-      dispatch({type: UserActionTypes.FETCH_USER})
+      dispatch({ type: UserActionTypes.FETCH_USER })
       const response = await fetch(`${URL}/users/me`,
         {
           method: 'PATCH',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            "Authorization" : `Bearer ${jwt}`
+            "Authorization": `Bearer ${jwt}`
           },
           body: JSON.stringify({
             name: profileData.name,
@@ -98,7 +98,7 @@ export const updateUserInfo = (profileData: ProfileData) => {
           })
         })
       const user = await response.json();
-      dispatch({type: UserActionTypes.FETCH_USER_SUCCESS, payload: user})
+      dispatch({ type: UserActionTypes.FETCH_USER_SUCCESS, payload: user })
     } catch (e: any) {
       const errorMessage = await e.json();
       dispatch({
@@ -110,5 +110,5 @@ export const updateUserInfo = (profileData: ProfileData) => {
 }
 
 export const setUser = (profileData: ProfileData) => {
-  return {type: UserActionTypes.SET_USER, payload: profileData}
+  return { type: UserActionTypes.SET_USER, payload: profileData }
 }

@@ -35,8 +35,6 @@ const MoviesCardList: FC<MoviesCardListProps> = ({ path, movies, cardPlace, movi
           key={generateKey()}
           movie={movie}
           place={cardPlace}
-          // onMovieLike={handleLikeMovieCb}
-          // onDeleteMovie={handleMovieDeleteCb}
         />
       );
     })

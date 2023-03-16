@@ -23,10 +23,10 @@ const Movies: FC<MoviesProps> = ({isLoggedIn, totalCount}) => {
   const [ searchedMoviesWithOwner, setSearchedMoviesWithOwner ] = useState<any[]>([]);
 
   const handleMoviesSearchCb = (searchQuery: string, toggleState: boolean) => {
-    if (isFirstRequest) {
-      setIsFirstRequest(true)
-      return;
-    }
+    // if (isFirstRequest) {
+    //   setIsFirstRequest(true)
+    //   return;
+    // }
     if (searchQuery) {
       setMoviesSearchQuery(searchQuery)
     };
@@ -41,6 +41,8 @@ const Movies: FC<MoviesProps> = ({isLoggedIn, totalCount}) => {
 
       for (let savedMovieIndex = 0; savedMovieIndex < savedMovies.length; savedMovieIndex++) {
         if (String(savedMovies[savedMovieIndex].movieId) === String(movie.id)) {
+          console.log(String(savedMovies[savedMovieIndex].movieId))
+          console.log(String(movie.id))
           ownerStatus = true;
           movie._id = savedMovies[savedMovieIndex]._id;
           break;
@@ -74,10 +76,9 @@ const Movies: FC<MoviesProps> = ({isLoggedIn, totalCount}) => {
           movies={searchedMoviesWithOwner}
           cardPlace={"movie"}
           moviesCount={totalCount}
-          // addMoviesCount={handleAddMoviesCountCb}
         />
       }
-      {!isFirstRequest && searchedMoviesWithOwner.length === 0 && <p className="movies__error">Ничего не найдено</p>}
+      {searchedMoviesWithOwner.length === 0 && <p className="movies__error">Ничего не найдено</p>}
       {/*{!isFirstRequest && movies.length === 0 && <p className="movies__error">Ничего не найдено</p>}*/}
       {/*{errorMessage &&*/}
       {/*  <p className="movies__error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен.*/}
