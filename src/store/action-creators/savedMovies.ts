@@ -4,7 +4,6 @@ import { ISavedMovie, SavedMoviesAction, SavedMoviesActionTypes } from "../../ty
 import { IUser } from '../../types/user';
 
 export const getSavedMovies = (token: string, user: IUser) => {
-  console.log(`Token is`, token)
   return async (dispatch: Dispatch<SavedMoviesAction>) => {
     try {
       dispatch({ type: SavedMoviesActionTypes.FETCH_SAVED_MOVIES })

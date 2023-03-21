@@ -1,16 +1,15 @@
 import './AuthForm.css'
-import React, { FC } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 
-interface AuthFormProps {
+interface AuthFormProps extends PropsWithChildren {
   buttonValue: string;
-  children: any;
   onSubmit: () => void;
   isInputsValid: boolean;
   error: string | null;
   loading: boolean;
 }
 
-const AuthForm: FC<AuthFormProps> = ({ buttonValue, children, onSubmit, isInputsValid, error, loading }) => {
+const AuthForm: FC<AuthFormProps> = ({ buttonValue, onSubmit, children, isInputsValid, error, loading }) => {
   return (
     <form
       className="auth-form"

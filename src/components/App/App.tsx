@@ -4,8 +4,8 @@ import React, { FC, useCallback, useEffect, useState } from 'react';
 import { Route, Routes, Navigate } from "react-router-dom";
 import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
-
 import { updateTotalCount } from './utils';
+import { setUser } from '../../store/action-creators/user';
 
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -18,7 +18,6 @@ import TechsDigital from "../TechsDigital/TechsDigital";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Preloader from "../Preloader/Preloader";
-import { setUser } from '../../store/action-creators/user';
 
 const App: FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);

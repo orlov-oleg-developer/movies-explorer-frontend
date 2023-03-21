@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react';
 import { NavLink, Link } from "react-router-dom";
 import './Header.css'
 import Menu from '../Menu/Menu';
+
 import logoPath from '../../images/logo.svg';
 import accountIconPath from '../../images/account-icon.svg';
 import menuIconPath from '../../images/menu-icon.svg';
