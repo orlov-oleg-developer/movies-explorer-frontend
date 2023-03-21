@@ -44,7 +44,7 @@ You will also see any lint errors in the console.
 ---
 ### Дальнейший план:
 
-1. Переписать на Typescript и добавить Redux;
+1. Переписать на Redux toolkit;
 2. Изменить стиль;
 3. Добавить трендовые анимации.
 
