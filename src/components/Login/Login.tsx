@@ -10,7 +10,7 @@ import useInput from "../../hooks/useInput";
 const Login: FC = () => {
   const { authorize } = useActions();
 
-  const { token, error, loading } = useTypedSelector(state => state.token);
+  const { error, loading } = useTypedSelector(state => state.token);
   const [isInputsValid, setIsInputsValid] = useState(false);
 
   const mailInput = useInput(

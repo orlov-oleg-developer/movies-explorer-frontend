@@ -48,7 +48,8 @@ const Register: FC = () => {
   }, [nameInput, mailInput, passwordInput]);
 
   useEffect(() => {
-    if (user.name) {
+    console.log(user);
+    if (user?.name) {
       authorize({ mailInput: mailInput.value, passwordInput: passwordInput.value })
     }
   }, [user])

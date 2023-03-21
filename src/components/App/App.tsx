@@ -18,6 +18,7 @@ import TechsDigital from "../TechsDigital/TechsDigital";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Preloader from "../Preloader/Preloader";
+import { setUser } from '../../store/action-creators/user';
 
 const App: FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -33,10 +34,15 @@ const App: FC = () => {
   const cbLogout = useCallback(() => {
     setIsLoggedIn(false);
     setToken('')
+    setUser({
+      email: '',
+      name: '',
+    });
     localStorage.removeItem('jwt');
     localStorage.removeItem('movies');
     localStorage.removeItem('toggle');
     localStorage.removeItem('movieRequest');
+    localStorage.removeItem('isFirstRequest');
   }, []);
 
   const cbTokenCheck = useCallback(async () => {
@@ -65,9 +71,9 @@ const App: FC = () => {
   }, [user, error])
 
   useEffect(() => {
-    if (!isLoggedIn) return
+    if (!token || !user?.name) return
     getSavedMovies(token, user);
-  }, [isLoggedIn]);
+  }, [token, user]);
 
   useEffect(() => {
     updateTotalCountcb();
