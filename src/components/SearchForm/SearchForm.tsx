@@ -9,10 +9,9 @@ import toggleDisableIconPath from "../../images/toggle-disable.svg";
 interface SearchFormProps {
   path: string;
   handleMoviesSearch: (searchQuery: string, toggleState: boolean) => void;
-  isFirstRequest?: boolean;
 }
 
-const SearchForm: FC<SearchFormProps> = ({ path, handleMoviesSearch, isFirstRequest }) => {
+const SearchForm: FC<SearchFormProps> = ({ path, handleMoviesSearch }) => {
   const [toggleState, setToggleState] = useState(false);
   const [showError, setShowError] = useState(false);
 

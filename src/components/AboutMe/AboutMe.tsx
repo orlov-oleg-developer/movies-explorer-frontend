@@ -1,8 +1,9 @@
 import './AboutMe.css'
+import { FC } from 'react';
+
 import PageTitle from "../PageTitle/PageTitle"
-import imagePath from '../../images/photo.png';
-import linkToIconPath from "../../images/link-icon.svg";
-import React, { FC } from 'react';
+
+import { imagePath, linkToIconPath } from '../../images/index'
 
 const AboutMe: FC = () => {
   return (

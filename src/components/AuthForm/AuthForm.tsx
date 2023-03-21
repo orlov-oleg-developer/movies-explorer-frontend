@@ -24,7 +24,7 @@ const AuthForm: FC<AuthFormProps> = ({ buttonValue, children, onSubmit, isInputs
         {error && <p className="auth-form__input-error">{error}</p>}
       </div>
       <button
-        disabled={(isInputsValid && !loading) ? false : true}
+        disabled={!isInputsValid && loading}
         type="submit"
         className={`auth-form__submit ${isInputsValid && "auth-form__submit_active"}`}
         name="form-submit"

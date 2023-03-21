@@ -18,18 +18,19 @@ const Movies: FC<MoviesProps> = ({ isLoggedIn }) => {
 
   const { getMovies, setMovies, addCardsTotalCount } = useActions();
 
-  const [isFirstRequest, setIsFirstRequest] = useState(true);
+  const [isFirstRequest, setIsFirstRequest] = useState(false);
   const [moviesSearchQuery, setMoviesSearchQuery] = useState('');
   const [moviesToggleState, setMoviesToggleState] = useState(false);
   const searchedMovies = useSearch(movies, moviesSearchQuery, moviesToggleState);
   const [searchedMoviesWithOwner, setSearchedMoviesWithOwner] = useState<any[]>([]);
 
-
   const handleMoviesSearchCb = (searchQuery: string, toggleState: boolean) => {
     if (isFirstRequest) {
       getMovies();
-      setIsFirstRequest(true)
+      localStorage.setItem('isFirstRequest', JSON.stringify(isFirstRequest));
+      setIsFirstRequest(false);
     }
+
     if (searchQuery) {
       setMoviesSearchQuery(searchQuery)
     };
@@ -66,12 +67,18 @@ const Movies: FC<MoviesProps> = ({ isLoggedIn }) => {
   }
 
   useEffect(() => {
-    const moviesList = localStorage.getItem('movies');
-    if (moviesList) {
-      setMovies(JSON.parse(moviesList));
-      setIsFirstRequest(false);
+    const isFirstRequestState = localStorage.getItem('isFirstRequest');
+    if (isFirstRequestState !== null) {
+      setIsFirstRequest(false)
+    } else {
+      setIsFirstRequest(true);
+      return;
     }
 
+    const moviesList = localStorage.getItem('movies');
+    if (moviesList !== null) {
+      setMovies(JSON.parse(moviesList));
+    } else getMovies();
     return () => { setMovies([]) };
   }, [])
 
@@ -84,7 +91,6 @@ const Movies: FC<MoviesProps> = ({ isLoggedIn }) => {
       <SearchForm
         path={'/movies'}
         handleMoviesSearch={handleMoviesSearchCb}
-        isFirstRequest={isFirstRequest}
       />
       {searchedMovies.length !== 0 &&
         <MoviesCardList
@@ -94,7 +100,7 @@ const Movies: FC<MoviesProps> = ({ isLoggedIn }) => {
           onAddMoviesCount={handleAddMoviesCount}
         />
       }
-      {!isFirstRequest && searchedMoviesWithOwner.length === 0 && <p className="movies__error">Ничего не найдено</p>}
+      {!isFirstRequest && !loading && searchedMoviesWithOwner.length === 0 && <p className="movies__error">Ничего не найдено</p>}
       {error &&
         <p className="movies__error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен.
           Подождите немного и попробуйте ещё раз</p>

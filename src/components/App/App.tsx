@@ -5,7 +5,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 
-import { SCREEN, TABLET } from '../../config/config'
+import { updateTotalCount } from './utils';
 
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -28,17 +28,7 @@ const App: FC = () => {
   const { token } = useTypedSelector(state => state.token);
   const { user, error, loading } = useTypedSelector(state => state.user);
 
-  const updateTotalCount = () => {
-    if (window.innerWidth >= SCREEN) {
-      setCardsTotalCount(12);
-    }
-    else if (window.innerWidth >= TABLET) {
-      setCardsTotalCount(8);
-    }
-    else {
-      setCardsTotalCount(5);
-    }
-  }
+  const updateTotalCountcb = updateTotalCount(setCardsTotalCount)
 
   const cbLogout = useCallback(() => {
     setIsLoggedIn(false);
@@ -80,10 +70,10 @@ const App: FC = () => {
   }, [isLoggedIn]);
 
   useEffect(() => {
-    updateTotalCount();
+    updateTotalCountcb();
 
-    window.addEventListener('resize', updateTotalCount);
-    return () => window.removeEventListener('resize', updateTotalCount);
+    window.addEventListener('resize', updateTotalCountcb);
+    return () => window.removeEventListener('resize', updateTotalCountcb);
   }, [])
 
   if (!checkingLogIn) return <Preloader />
