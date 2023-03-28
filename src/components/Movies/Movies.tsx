@@ -5,14 +5,9 @@ import { useTypedSelector } from "../../hooks/useTypedSelector";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import useSearch from "../../hooks/useSearch";
-import Preloader from "../Preloader/Preloader";
 import { SCREEN, TABLET } from '../../config/config'
 
-interface MoviesProps {
-  isLoggedIn: boolean;
-}
-
-const Movies: FC<MoviesProps> = ({ isLoggedIn }) => {
+const Movies: FC = () => {
   const { movies, error, loading } = useTypedSelector(state => state.movies);
   const { savedMovies } = useTypedSelector(state => state.savedMovies);
 
@@ -105,7 +100,6 @@ const Movies: FC<MoviesProps> = ({ isLoggedIn }) => {
         <p className="movies__error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен.
           Подождите немного и попробуйте ещё раз</p>
       }
-      {!isLoggedIn && <Preloader />}
     </main>
   );
 };

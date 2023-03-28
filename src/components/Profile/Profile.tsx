@@ -81,6 +81,8 @@ const Profile: FC<Profile> = ({ onLogout }) => {
         onConfirm={handleConfirm}
         onCloseButton={handleClosePopup}
         isOpen={isOpen}
+        message={'Применить изменения?'}
+        buttonText={'Да'}
       />
       <h1 className="profile__title">{`Привет, ${user.name}!`}</h1>
       <form

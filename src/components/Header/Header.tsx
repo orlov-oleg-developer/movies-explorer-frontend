@@ -47,10 +47,16 @@ const Header: FC<HeaderProps> = ({ className, isLoggedIn }) => {
             />
           </div>
           :
-          <div className="header__buttons-container">
-            <Link to="/signup" className="header__link">Регистрация</Link>
-            <Link to="/signin" className="header__link header__link_state_login">Войти</Link>
-          </div>
+          <>
+            <NavLink
+              to="/movies"
+              className={({ isActive }) => isActive ? "header__links-link header__links-link_dedicated" : 'header__links-link'}
+            >Фильмы</NavLink>
+            <div className="header__buttons-container">
+              <Link to="/signup" className="header__link">Регистрация</Link>
+              <Link to="/signin" className="header__link header__link_state_login">Войти</Link>
+            </div>
+          </>
         }
       </header>
       <Menu

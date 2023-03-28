@@ -110,6 +110,16 @@ const App: FC = () => {
           element={isLoggedIn ? <Navigate to={'/'} /> : <Register />}
         />
 
+        <Route path='/movies' element={
+          <>
+            <Header
+              className='App__header'
+              isLoggedIn={isLoggedIn}
+            />
+            <Movies />
+          </>
+        } />
+
         <Route element={<ProtectedRoute isLoggedIn={isLoggedIn} />} >
           <Route path='/profile' element={
             <>
@@ -118,18 +128,6 @@ const App: FC = () => {
                 isLoggedIn={isLoggedIn}
               />
               <Profile onLogout={cbLogout} />
-            </>
-          } />
-
-          <Route path='/movies' element={
-            <>
-              <Header
-                className='App__header'
-                isLoggedIn={isLoggedIn}
-              />
-              <Movies
-                isLoggedIn={isLoggedIn}
-              />
             </>
           } />
 
