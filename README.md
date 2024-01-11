@@ -1,6 +1,5 @@
 ## Проект: Портфолио и сервис по поиску фильмов | Front-end
 
-### Demo - [ссылка](https://movies.developer.nomoredomains.rocks/)
 ### Ссылка на макет - [Ссылка](https://disk.yandex.ru/d/x_tQ3ELDw5-_Zw)
 ### Pull Requests - [Ссылка](https://github.com/orlov-oleg-developer/movies-explorer-frontend/pull/2)
 
